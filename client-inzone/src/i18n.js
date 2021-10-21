@@ -1,24 +1,21 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translationEN from 'i18n/en.json';
 
 
 i18n
-    .use(initReactI18next)
-    .init({    // the translations , manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
         resources: {
             en: {
                 translation: {
-                    translationEN
+                    "test": "Welcome to React and react-i18next"
                 }
             }
         },
-        lng: "en", // if you're using a language detector, do not define the lng option
-        fallbackLng: "en",
-        keySeparator: false,
+        lng: "en",
+        keySeparator: false, // we do not use keys in form messages.welcome
         interpolation: {
-            escapeValue: false
-        } // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+            escapeValue: false // react already safes from xss
+        }
     });
-
 export default i18n;

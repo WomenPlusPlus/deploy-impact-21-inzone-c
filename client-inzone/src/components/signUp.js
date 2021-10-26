@@ -2,8 +2,8 @@ import {Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} 
 import {Link} from "react-router-dom";
 import React from "react";
 
-const signUp=()=>{
 
+export default function SignUp() {
     const paperStyle={padding :20,height:'70vh',width:500, margin:"20px auto"}
     const btnstyle={margin:'8px 0'}
     return(
@@ -30,5 +30,3 @@ const signUp=()=>{
         </Grid>
     )
 }
-
-export default signUp

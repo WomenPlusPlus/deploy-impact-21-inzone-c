@@ -1,7 +1,10 @@
 import React from 'react'
-import { Grid,Paper, TextField, Button, Typography,Link } from '@mui/material';
+import { Grid,Paper, TextField, Button, Typography} from '@mui/material';
 import { FormControlLabel } from '@mui/material';
 import { Checkbox} from '@mui/material';
+import { Link } from 'react-router-dom';
+
+
 const Login=()=>{
 
     const paperStyle={padding :20,height:'70vh',width:280, margin:"20px auto"}
@@ -30,7 +33,7 @@ const Login=()=>{
                     </Link>
                 </Typography>
                 <Typography > Do you have an account ?
-                    <Link href="#" >
+                    <Link to={'/page1'}>
                         Sign Up
                     </Link>
                 </Typography>

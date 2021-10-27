@@ -1,22 +1,24 @@
 import React from 'react'
-import { Grid,Paper, TextField, Button, Typography} from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { Grid, Paper, TextField, Button, Typography } from '@mui/material';
 import { FormControlLabel } from '@mui/material';
-import { Checkbox} from '@mui/material';
+import { Checkbox } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 
-const Login=()=>{
+export default function Login(){
 
-    const paperStyle={padding :20,height:'70vh',width:280, margin:"20px auto"}
-    const btnstyle={margin:'8px 0'}
-    return(
+    const paperStyle = { padding: 20, height: '70vh', width: 280, margin: "20px auto" }
+    const btnstyle = { margin: '8px 0' }
+    const {t} = useTranslation();
+    return (
         <Grid>
             <Paper elevation={10} style={paperStyle}>
                 <Grid align='center'>
-                    <h2>Sign In</h2>
+                    <h2>{t('login')}</h2>
                 </Grid>
-                <TextField style={{marginBottom: '10px'}} label='Username' placeholder='Enter username' fullWidth required/>
-                <TextField label='Password' placeholder='Enter password' type='password' fullWidth required/>
+                <TextField style={{ marginBottom: '10px' }} label='Username' placeholder='Enter username' fullWidth required />
+                <TextField label='Password' placeholder='Enter password' type='password' fullWidth required />
                 <FormControlLabel
                     control={
                         <Checkbox
@@ -33,7 +35,7 @@ const Login=()=>{
                     </Link>
                 </Typography>
                 <Typography > Do you have an account ?
-                    <Link to={'/page1'}>
+                    <Link to={'/SignUp'}>
                         Sign Up
                     </Link>
                 </Typography>
@@ -42,4 +44,3 @@ const Login=()=>{
     )
 }
 
-export default Login

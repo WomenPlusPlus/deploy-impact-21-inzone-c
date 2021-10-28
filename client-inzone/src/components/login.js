@@ -57,7 +57,7 @@ export default function Login() {
           // localStorage.setItem("rememberMe", rememberMe); -> Comment this for now about rememberMe feature.
           // localStorage.setItem("userInfo", rememberMe ? user : ""); -> Comment this for now about rememberMe feature.
           localStorage.setItem("userInformation", JSON.stringify(json));
-          window.location.reload(false);
+          window.location.reload(false); // We can improve this line.
         }
       })
       .catch((err) => console.log(err));

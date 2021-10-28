@@ -6,6 +6,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import StudentLayout from "./components/Student/StudentLayout";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           {/* <Route path="/" /> */}
           <Route path="/login" component={Login} />
           <Route path={"/signup"} component={SignUp} />
+          <Route path={"/student/home"} component={StudentLayout} />
         </Switch>
       </Router>
     </div>

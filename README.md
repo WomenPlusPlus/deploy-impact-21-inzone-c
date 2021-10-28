@@ -35,6 +35,11 @@ RUN!
 * All requests include a header that is "X-Parse-Application-Id: inzonec"
 
 * Some requests include a header that is "X-Parse-Session-Token: tokenWhenUserLoggedInorSignedUp"
+
+* Example student info: username=giada&password=giada123
+
+* Example coordinator info: username=emrecan&password=emrecan123
+
 #### User Login
 
 ```http

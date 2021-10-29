@@ -1,8 +1,21 @@
 import React, { Component } from "react";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Box,
+  ListItem,
+  ListItemButton,
+  ListItemAvatar,
+  Divider,
+  Avatar,
+  IconButton,
+  ListItemText,
+  List,
+} from "@mui/material";
+import { Assignment, PlayCircleFilledWhite } from "@mui/icons-material";
 
 const HomeScreen = () => {
-  return <Typography>Home</Typography>;
+  
+  return "Home";
 };
 
 export default HomeScreen;

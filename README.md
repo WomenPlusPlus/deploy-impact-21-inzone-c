@@ -4,6 +4,16 @@
 InZone helps refugees to get better education.
 
 Let's deep dive to the app.
+
+## InZone C Parse Server Credentials
+
+* PARSE_DASHBOARD_URL: https://inzone-c-parse-dashboard.tools.deployimpact.ch/
+* PARSE_API_URL:  https://inzone-c-parse.tools.deployimpact.ch/parse
+* PARSE_USER: caprover
+* PARSE_PWD: 54dDc6pmG2eKJE
+* PARSE_MASTER_KEY: Nyv7VVbTC4LCvGnLpvAL2hSBrY9Lxf7j
+* PARSE_APPID: inzonec
+
 ## Run On Your PC
 
 Clone the project to current directory.

@@ -1,9 +1,9 @@
 import * as React from "react";
-import HomeScreen from "./HomeScreen";
-import ChatScreen from "./ChatScreen";
-import NotificationScreen from "./NotificationScreen";
-import ExamsScreen from "./ExamsScreen";
-import ProgressScreen from "./ProgressScreen";
+import HomePage from "./HomePage";
+import ChatPage from "./ChatPage";
+import NotificationPage from "./NotificationPage";
+import ExamsPage from "./ExamsPage";
+import ProgressPage from "./ProgressPage";
 import {
   Chat,
   Home,
@@ -272,51 +272,51 @@ const StudentLayout = () => {
       );
     }
   };
-  const showPage = () => {
-    if (value === 0) {
-      return <HomeScreen />;
-    } else if (value === 1) {
-      return <ChatScreen ref={ref} />;
-    } else if (value === 2) {
-      return <NotificationScreen />;
-    } else if (value === 3) {
-      return <ExamsScreen />;
-    } else if (value === 4) {
-      return <ProgressScreen />;
-    }
-  };
-  const showBottom = () => {
-    return (
-      <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-        elevation={3}
-      >
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction label="Home" icon={<Home />} />
-          <BottomNavigationAction label="Chat" icon={<Chat />} />
-          <BottomNavigationAction
-            label="Notifications"
-            icon={<Notifications />}
-          />
-          <BottomNavigationAction label="Exams" icon={<Assignment />} />
-          <BottomNavigationAction label="Progress" icon={<AddRoad />} />
-        </BottomNavigation>
-      </Paper>
-    );
-  };
+  // const showPage = () => {
+  //   if (value === 0) {
+  //     return <HomePage />;
+  //   } else if (value === 1) {
+  //     return <ChatPage ref={ref} />;
+  //   } else if (value === 2) {
+  //     return <NotificationPage />;
+  //   } else if (value === 3) {
+  //     return <ExamsPage />;
+  //   } else if (value === 4) {
+  //     return <ProgressPage />;
+  //   }
+  // };
+  // const showBottom = () => {
+  //   return (
+  //     <Paper
+  //       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+  //       elevation={3}
+  //     >
+  //       <BottomNavigation
+  //         showLabels
+  //         value={value}
+  //         onChange={(event, newValue) => {
+  //           setValue(newValue);
+  //         }}
+  //       >
+  //         <BottomNavigationAction label="Home" icon={<Home />} />
+  //         <BottomNavigationAction label="Chat" icon={<Chat />} />
+  //         <BottomNavigationAction
+  //           label="Notifications"
+  //           icon={<Notifications />}
+  //         />
+  //         <BottomNavigationAction label="Exams" icon={<Assignment />} />
+  //         <BottomNavigationAction label="Progress" icon={<AddRoad />} />
+  //       </BottomNavigation>
+  //     </Paper>
+  //   );
+  // };
 
   return (
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
-      {showHeader()}
+      {/* {showHeader()}
       {showPage()}
-      {showBottom()}
+      {showBottom()} */}
     </Box>
   );
 };

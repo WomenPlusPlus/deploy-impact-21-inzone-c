@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Typography,
-  Box,
   ListItem,
-  ListItemButton,
   ListItemAvatar,
   Divider,
   Avatar,
@@ -11,7 +9,7 @@ import {
   List,
 } from "@mui/material";
 
-const ChatScreen = () => {
+const ChatPage = () => {
   const renderRow = () => {
     return (
       <>
@@ -91,4 +89,4 @@ const ChatScreen = () => {
   );
 };
 
-export default ChatScreen;
+export default ChatPage;

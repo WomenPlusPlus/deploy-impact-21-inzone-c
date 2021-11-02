@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
-  Typography,
-  Box,
   ListItem,
-  ListItemButton,
   ListItemAvatar,
   Divider,
   Avatar,
@@ -11,9 +8,9 @@ import {
   ListItemText,
   List,
 } from "@mui/material";
-import { Assignment, PlayCircleFilledWhite } from "@mui/icons-material";
+import { Check, CircleNotifications } from "@mui/icons-material";
 
-const ExamsScreen = () => {
+const NotificationScreen = () => {
   const renderRow = () => {
     return (
       <>
@@ -21,48 +18,48 @@ const ExamsScreen = () => {
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <PlayCircleFilledWhite />
+              <Check />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <Assignment />
+              <CircleNotifications />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
+          <ListItemText primary="Exam Notification!" secondary={"Notification Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <PlayCircleFilledWhite />
+              <Check />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <Assignment />
+              <CircleNotifications />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
+          <ListItemText primary="Chat Notification" secondary={"Notification Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <PlayCircleFilledWhite />
+              <Check />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <Assignment />
+              <CircleNotifications />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
+          <ListItemText primary="Certificate Notification" secondary={"Notification Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
       </>
@@ -75,4 +72,4 @@ const ExamsScreen = () => {
   );
 };
 
-export default ExamsScreen;
+export default NotificationScreen;

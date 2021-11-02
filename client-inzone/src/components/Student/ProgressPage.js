@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Typography } from "@mui/material";
 
-const ProgressScreen = () => {
+const ProgressPage = () => {
   return <Typography>Progress</Typography>;
 };
 
-export default ProgressScreen;
+export default ProgressPage;

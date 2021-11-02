@@ -11,9 +11,9 @@ import {
   ListItemText,
   List,
 } from "@mui/material";
-import { Assignment, Check, CircleNotifications, PlayCircleFilledWhite } from "@mui/icons-material";
+import { Assignment, PlayCircleFilledWhite } from "@mui/icons-material";
 
-const NotificationScreen = () => {
+const ExamsPage = () => {
   const renderRow = () => {
     return (
       <>
@@ -21,48 +21,48 @@ const NotificationScreen = () => {
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <Check />
+              <PlayCircleFilledWhite />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <CircleNotifications />
+              <Assignment />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Exam Notification!" secondary={"Notification Description"} />
+          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <Check />
+              <PlayCircleFilledWhite />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <CircleNotifications />
+              <Assignment />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Chat Notification" secondary={"Notification Description"} />
+          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem
           alignItems="flex-start"
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <Check />
+              <PlayCircleFilledWhite />
             </IconButton>
           }
         >
           <ListItemAvatar>
             <Avatar>
-              <CircleNotifications />
+              <Assignment />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Certificate Notification" secondary={"Notification Description"} />
+          <ListItemText primary="Exam Name" secondary={"Exam Description"} />
         </ListItem>
         <Divider variant="inset" component="li" />
       </>
@@ -75,4 +75,4 @@ const NotificationScreen = () => {
   );
 };
 
-export default NotificationScreen;
+export default ExamsPage;

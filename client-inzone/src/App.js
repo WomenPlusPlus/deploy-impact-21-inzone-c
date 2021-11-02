@@ -6,20 +6,41 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import StudentLayout from "./components/Student/StudentLayout";
+import HomePage from "./components/HomePage";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState } from "react";
+
+export const light = {
+  palette: {
+    mode: 'light',
+  },
+}
+export const dark = {
+  palette: {
+    mode: 'dark',
+  },
+}
+
 
 function App() {
+
+  const [theme, setTheme] = useState(true);
+  // const icon = !theme ? <Brightness7Outlined /> : <Brightness3Outlined /> 
+  const appliedTheme = createTheme(light);
+
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          {/* <Route path="/" /> */}
-          <Route path="/login" component={Login} />
-          <Route path={"/signup"} component={SignUp} />
-          <Route path={"/student/home"} component={StudentLayout} />
-        </Switch>
-      </Router>
-    </div>
+
+    <ThemeProvider theme={appliedTheme}>
+      <div className="App">
+        <Router>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path={"/signup"} component={SignUp} />
+            <Route path={"/home"} component={HomePage} />
+          </Switch>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 

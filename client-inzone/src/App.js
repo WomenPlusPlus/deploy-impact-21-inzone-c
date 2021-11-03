@@ -1,4 +1,4 @@
-import Login from "./components/Login";
+import LoginPage from "./components/LoginPage";
 import SignUp from "./components/SignUp";
 // import ExamAlert from './components/ExamAlert'; -> Commented this for now.
 import {
@@ -34,9 +34,9 @@ function App() {
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginPage} />
             <Route path={"/signup"} component={SignUp} />
-            <Route path={"/home"} component={HomePage} />
+            <Route path={"/student/home"} component={HomePage} />
           </Switch>
         </Router>
       </div>

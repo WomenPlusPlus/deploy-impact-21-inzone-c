@@ -6,6 +6,7 @@ import {
   } from "react-router-dom";
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
+import SignUpPage from './SignUpPage';
 // import ChatPage from './Student/ChatPage';
 // import NotificationPage from './Student/NotificationPage';
 
@@ -13,7 +14,7 @@ const createRoutes = () => (
     <Router>
         <Switch>
             <Route path="/login" component={LoginPage} />
-            {/* <Route path={"/signup"} component={SignUpPage} /> */}
+            <Route path={"/signup"} component={SignUpPage} />
             <Route path={"/student/home"} component={HomePage} />
         </Switch>
     </Router>

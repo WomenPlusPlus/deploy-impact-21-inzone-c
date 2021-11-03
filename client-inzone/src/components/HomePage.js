@@ -16,9 +16,12 @@ export default class HomePage extends Component {
             <Route exact path="/" component={HomePage} />
             <Route path="/chat/" component={ChatPage} />
             <Route path="/notifications/" component={NotificationPage} />
+            <Route path="/settings/" component={NotificationPage} />
           </Switch>
         </BrowserRouter>
       </div>
+
+
     );
   }
 };

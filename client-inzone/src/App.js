@@ -1,14 +1,6 @@
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-// import ExamAlert from './components/ExamAlert'; -> Commented this for now.
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
-import HomePage from "./components/HomePage";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React, { useState } from "react";
+import createRoutes from "./components/Routes";
 
 export const light = {
   palette: {
@@ -21,10 +13,9 @@ export const dark = {
   },
 }
 
-
 function App() {
 
-  const [theme, setTheme] = useState(true);
+  // const [theme, setTheme] = useState(true);
   // const icon = !theme ? <Brightness7Outlined /> : <Brightness3Outlined /> 
   const appliedTheme = createTheme(light);
 
@@ -32,13 +23,7 @@ function App() {
 
     <ThemeProvider theme={appliedTheme}>
       <div className="App">
-        <Router>
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path={"/signup"} component={SignUp} />
-            <Route path={"/home"} component={HomePage} />
-          </Switch>
-        </Router>
+        {createRoutes()}
       </div>
     </ThemeProvider>
   );

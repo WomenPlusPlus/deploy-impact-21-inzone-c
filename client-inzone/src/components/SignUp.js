@@ -2,11 +2,11 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import red from '@mui/material/colors/red';
+import grey from '@mui/material/colors/red';
 
 const theme = createTheme({
     palette: {
-        primary: red,
+        primary: grey,
     },
 });
 

@@ -31,13 +31,13 @@ Change directory.
 Install dependencies.
 
 ```bash
-  npm install
+  yarn install
 ```
 
 RUN!
 
 ```bash
-  npm start
+  yarn start
 ```
 
 

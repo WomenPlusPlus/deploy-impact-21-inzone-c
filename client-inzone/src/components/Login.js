@@ -43,7 +43,6 @@ export default function Login() {
     )
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
         if (json.code === 101) {
           // Invalid username/password.
           alert(json.error);

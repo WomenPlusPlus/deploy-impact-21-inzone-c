@@ -42,6 +42,8 @@ RUN!
 
 
 ## API Reference
+* https://inzone-c-parse.tools.deployimpact.ch/parse is the base url.
+
 * All requests include a header that is "X-Parse-Application-Id: inzonec"
 
 * Some requests include a header that is "X-Parse-Session-Token: tokenWhenUserLoggedInorSignedUp"
@@ -60,6 +62,26 @@ RUN!
 | :-------- | :------- | :------------------------- |
 | `username` | `string` | **Required**. Username of user. |
 | `password` | `string` | **Required**. Password of user. |
+
+#### Get All Exams Related to User (Student) (With RefugeeCamp Option)
+
+```http
+  GET /classes/Exam?where={"$or":[{"examLocation":{"__type":"Pointer","className":"RefugeeCamp","objectId":"REFUGEECAMPOBJECTIDWILLBEHERE"}},{"examLocation":null}]}&include=examLocation&include=createdBy
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `objectId` | `string` | **Required**. RefugeeCampId of user. |
+
+#### Get MCQ Questions of an Exam
+
+```http
+  GET https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"EXAMOBJECTIDWILLBEHERE"}}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `objectId` | `string` | **Required**. ObjectId of an exam. |
 
 
 

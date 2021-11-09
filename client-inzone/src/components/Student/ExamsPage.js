@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -208,7 +207,6 @@ const ExamsPage = () => {
       {examInfo && <ExamStepHandlingComponent examInfo={examInfo} />}
     </>
   );
-  //
 };
 
 export default ExamsPage;

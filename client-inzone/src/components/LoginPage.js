@@ -110,13 +110,13 @@ class LoginPage extends Component {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="username"
                 onChange={(input) => {
                   this.setState({ username: input.target.value });
                 }}
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
               />
               <TextField

@@ -5,7 +5,8 @@ import Navbar from "./Navbar";
 import ChatPage from "./Student/ChatPage";
 import NotificationPage from "./Student/NotificationPage";
 import ExamsPage from "./Student/ExamsPage";
-import StudentHomePage from "./StudentHomePage";
+import StudentHomePage from "./Student/StudentHomePage";
+import SettingsPage from "./Student/SettingsPage";
 const StudentRoutes = () => {
   // I solved the refresh problem while i was doing changing some routes. Our URL's could be different for coordinator and student.
   return (
@@ -17,7 +18,7 @@ const StudentRoutes = () => {
           <Route path="/student/chat" component={ChatPage} />
           <Route path="/student/notifications" component={NotificationPage} />
           <Route path="/student/exams" component={ExamsPage} />
-          <Route path="/student/settings" component={NotificationPage} />
+          <Route path="/student/settings" component={SettingsPage} />
         </Switch>
       </BrowserRouter>
     </div>

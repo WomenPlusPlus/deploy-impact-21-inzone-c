@@ -29,8 +29,8 @@ const steps = [
     description: "Read the Rules!",
   },
   {
-    label: "Exam Sections",
-    description: `Exam sections..`,
+    label: "Begin Exam",
+    description: `Begin exam..`,
   },
 ];
 
@@ -208,7 +208,7 @@ const ExamStepHandlingComponent = (props) => {
                               component="div"
                               gutterBottom
                             >
-                              Read Rules
+                              Read and accept rules
                             </Typography>
                           </StepLabel>
                           <StepContent>
@@ -273,7 +273,7 @@ const ExamStepHandlingComponent = (props) => {
                               component="div"
                               gutterBottom
                             >
-                              Exam Sections
+                              Begin Exam
                             </Typography>
                           </StepLabel>
                           <StepContent>
@@ -301,6 +301,7 @@ const ExamStepHandlingComponent = (props) => {
                             <Box sx={{ mb: 2 }}>
                               <div>
                                 <Button
+                                  style={{ display: "none" }}
                                   variant="contained"
                                   onClick={handleNext}
                                   sx={{ mt: 1, mr: 1 }}
@@ -341,9 +342,12 @@ const ExamStepHandlingComponent = (props) => {
                 ) : (
                   <ThirdStep
                     examInfo={props.examInfo}
-                    submitExam={(submitExam) =>
-                      submitExam && setCloseExamComponent(false)
-                    }
+                    submitExam={(submitExam) => {
+                      if (submitExam === true) {
+                        setCloseExamComponent(false);
+                        props.finishExam(true);
+                      }
+                    }}
                   />
                 )}
               </Item>

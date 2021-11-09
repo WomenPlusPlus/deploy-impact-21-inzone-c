@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -13,12 +13,7 @@ import {
   FormLabel,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-const options = [
-  "Ne nam phaedrum consequat, adhuc aliquid ea pri, eum eligendi incorrupte referrentur in.",
-  "Vix ad senserit salutandi argumentum. Ei eam definiebas reformidans, exerci persecuti no ius",
-  "Cu cum harum paulo legendos, mei et quod enim mnesarchum, habeo affert laoreet sea ei.",
-  "Assum suavitate ea vel, vero erat doming cu cum. Zril ornatus sea cu. Pro ex integre pertinax.",
-];
+
 const useStyles = makeStyles((theme) => ({
   paperStyles: {
     padding: "20px",
@@ -38,13 +33,24 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
 }));
+
 const SecondStep = (props) => {
+  const [seconds, setSeconds] = useState(15);
   const classes = useStyles();
   const [questionNo, setQuestionNo] = useState(0);
   const nextQuestion = () => {
     let newQuestionNo = questionNo + 1;
     setQuestionNo(newQuestionNo);
   };
+  useEffect(() => {
+    if (seconds > 0) {
+      setTimeout(() => setSeconds(seconds - 1), 1000);
+    } else {
+      setSeconds("BOOOOM!");
+      alert("Time is Up!");
+      props.finishExam(true);
+    }
+  });
   return (
     <>
       <Container maxWidth="md">
@@ -86,10 +92,7 @@ const SecondStep = (props) => {
             className={classes.chipStyle}
             label={questionNo + 1 + "/" + props.examInfo.mcq.length}
           />
-          <Chip
-            className={classes.chipStyle}
-            label="00:04:30 (NotImplemented)"
-          />
+          <Chip className={classes.chipStyle} label={seconds} />
           {(props.examInfo.mcq.length === questionNo + 1) === true ? (
             <Chip
               className={classes.chipStyle}

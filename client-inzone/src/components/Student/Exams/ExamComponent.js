@@ -17,7 +17,7 @@ const ExamComponent = (props) => {
             padding: 8,
           }}
         >
-          <Typography sx={{ mt: 2, mb: 1 }}>Live / Question Section</Typography>
+          <Typography sx={{ mt: 2, mb: 1 }} color="black">Live / Question Section</Typography>
           <Button
             disabled={false}
             variant="contained"
@@ -27,7 +27,7 @@ const ExamComponent = (props) => {
             }
             style={{ height: 40 }}
           >
-            Click
+            Begin
           </Button>
         </Box>
         <Box
@@ -42,7 +42,7 @@ const ExamComponent = (props) => {
             padding: 8,
           }}
         >
-          <Typography sx={{ mt: 2, mb: 1 }}>MCQ Question Section</Typography>
+          <Typography sx={{ mt: 2, mb: 1 }} color="black">MCQ Question Section</Typography>
           <Button
             onClick={() => {
               props.closeExamStepsTotally(true, true);
@@ -65,7 +65,7 @@ const ExamComponent = (props) => {
             padding: 8,
           }}
         >
-          <Typography sx={{ mt: 2, mb: 1 }}>
+          <Typography sx={{ mt: 2, mb: 1 }} color="black">
             Capstone Project Feedback
           </Typography>
           <Button
@@ -76,7 +76,7 @@ const ExamComponent = (props) => {
               props.closeExamStepsTotally(true, false);
             }}
           >
-            Click
+            Begin
           </Button>
         </Box>
       </Box>

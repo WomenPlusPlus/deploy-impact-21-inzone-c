@@ -4,18 +4,18 @@ import {
     Route,
     Switch
   } from "react-router-dom";
-import HomePage from './HomePage';
+import StudentRoutes from './StudentRoutes';
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
-// import ChatPage from './Student/ChatPage';
-// import NotificationPage from './Student/NotificationPage';
+import CoordinatorRoutes from './CoordinatorRoutes';
 
 const createRoutes = () => (
     <Router>
         <Switch>
             <Route path="/login" component={LoginPage} />
             <Route path={"/signup"} component={SignUpPage} />
-            <Route path={"/student/home"} component={HomePage} />
+            <Route path={"/student"} component={StudentRoutes} />
+            <Route path={"/coordinator"} component={CoordinatorRoutes} />
         </Switch>
     </Router>
 );

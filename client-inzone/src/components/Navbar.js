@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import {
   Box,
-  CssBaseline,
   AppBar,
   Toolbar,
   Typography,
@@ -22,8 +21,9 @@ import SwitchUI from '@material-ui/core/Switch'
 
 
 function Navbar() {
-  const { currentTheme, setTheme } = useContext(CustomThemeContext)
+  const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const history = useHistory();
+  const isDark = Boolean(currentTheme === 'dark');
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("userInformation"))) {
@@ -31,8 +31,6 @@ function Navbar() {
       window.location.reload(false)
     }
   });
-
-  const isDark = Boolean(currentTheme === 'dark')
 
   const handleThemeChange = (event) => {
     const { checked } = event.target
@@ -45,8 +43,6 @@ function Navbar() {
 
   return (
     <Box sx={{ pb: 7 }}>
-      {/* <CssBaseline /> */}
-      {/* app bar */}
       <AppBar position="static">
         <Toolbar>
           <Typography

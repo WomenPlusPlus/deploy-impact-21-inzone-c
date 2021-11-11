@@ -1,6 +1,8 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React, { useState } from "react";
 import createRoutes from "./components/Routes";
+import "./index.css";
+
 
 export const light = {
   palette: {

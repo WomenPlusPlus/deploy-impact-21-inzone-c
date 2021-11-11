@@ -45,7 +45,7 @@ function Navbar() {
 
   return (
     <Box sx={{ pb: 7 }}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       {/* app bar */}
       <AppBar position="static">
         <Toolbar>

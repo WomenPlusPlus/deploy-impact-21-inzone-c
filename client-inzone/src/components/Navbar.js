@@ -17,12 +17,11 @@ import {
 } from "@mui/icons-material";
 import { withRouter } from "react-router-dom";
 
-
 class Navbar extends Component {
   componentDidMount() {
     if (!JSON.parse(localStorage.getItem("userInformation"))) {
       this.props.history.push("/login");
-      window.location.reload(false)
+      window.location.reload(false);
     }
   }
   render() {
@@ -45,6 +44,7 @@ class Navbar extends Component {
             >
               Examify
             </Typography>
+
             <IconButton
               style={styles.navIcon}
               size="large"
@@ -128,7 +128,7 @@ class Navbar extends Component {
               onClick={() => {
                 localStorage.removeItem("userInformation");
                 this.props.history.push("/login");
-                window.location.reload(false)
+                window.location.reload(false);
               }}
             >
               <Logout />
@@ -140,19 +140,19 @@ class Navbar extends Component {
   }
 }
 
-const styles ={
-   navbar:{
+const styles = {
+  navbar: {
     //  backgroundColor:"black"
-   },
-   navIcon:{
-     marginRight:40,
-   },
-   logOutIcon:{
-    marginRight:200,
-   },
-   title:{
-    marginLeft:200,
-    fontWeight:700,
-   }
-} 
+  },
+  navIcon: {
+    marginRight: 40,
+  },
+  logOutIcon: {
+    marginRight: 200,
+  },
+  title: {
+    marginLeft: 200,
+    fontWeight: 700,
+  },
+};
 export default withRouter(Navbar);

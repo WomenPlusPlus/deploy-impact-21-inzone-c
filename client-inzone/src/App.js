@@ -1,5 +1,7 @@
 import React from 'react'
 import createRoutes from "./components/Routes";
+import "./index.css";
+
 
 function App() {
 

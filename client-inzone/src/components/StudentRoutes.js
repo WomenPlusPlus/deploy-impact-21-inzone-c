@@ -14,14 +14,14 @@ const StudentRoutes = () => {
       <BrowserRouter>
         <Navbar />
         <Switch>
-          <Route exact path="/student" component={StudentHomePage} />{" "}
-          <Route path="/student/chat" component={ChatPage} />{" "}
-          <Route path="/student/notifications" component={NotificationPage} />{" "}
-          <Route path="/student/exams" component={ExamsPage} />{" "}
-          <Route path="/student/settings" component={SettingsPage} />{" "}
-        </Switch>{" "}
-      </BrowserRouter>{" "}
+          <Route exact path="/student" component={StudentHomePage} />
+          <Route path="/student/chat" component={ChatPage} />
+          <Route path="/student/notifications" component={NotificationPage} />
+          <Route path="/student/exams" component={ExamsPage} />
+          <Route path="/student/settings" component={SettingsPage} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
-};
+}
 export default StudentRoutes;

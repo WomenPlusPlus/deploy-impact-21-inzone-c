@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Typography,
-  Box,
   Paper,
+  Modal,
   Grid,
   LinearProgress,
   IconButton,
@@ -11,10 +11,8 @@ import {
   FormControl,
   Input,
   InputAdornment,
-  Modal,
   ListItem,
   Divider,
-  Button,
 } from "@mui/material";
 import {
   Search,
@@ -24,7 +22,7 @@ import {
   PlaylistAddCheck,
   Check
 } from "@mui/icons-material";
-import DownloadButton from "../DownloadButton";
+import ModalUpload from "../ModalUpload";
 
 const ExamsPage = () => {
 
@@ -51,35 +49,34 @@ const ExamsPage = () => {
       .catch((err) => console.log(err));
   };
 
-  const loadUserExam = (exam) => {
-    let examObject = {
-      examId: exam.objectId,
-    };
-    fetch(
-      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
-      {
-        method: "GET",
-        headers: {
-          "X-Parse-Application-Id": "inzonec",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        let questions = [];
-        json.results.map((question) => {
-          questions.push(question);
-        });
-        examObject.mcq = questions;
-      })
-      .then(() => {
-        // TODO: We will get user's answer here!
-        console.log(examObject);
-        setExamInfo(examObject);
-      })
-      .catch((err) => console.log(err));
-  };
-
+  // const loadUserExam = (exam) => {
+  //   let examObject = {
+  //     examId: exam.objectId,
+  //   };
+  //   fetch(
+  //     `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "X-Parse-Application-Id": "inzonec",
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       let questions = [];
+  //       json.results.map((question) => {
+  //         questions.push(question);
+  //       });
+  //       examObject.mcq = questions;
+  //     })
+  //     .then(() => {
+  //       // TODO: We will get user's answer here!
+  //       console.log(examObject);
+  //       setExamInfo(examObject);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const renderUserExam = (exams) => {
     return (
@@ -106,19 +103,20 @@ const ExamsPage = () => {
     );
   };
 
+  const [modalIsOpen,setModalIsOpen] = useState(false);
+
+  const setModalIsOpenToTrue =()=>{
+      setModalIsOpen(true)
+  }
+
+  const setModalIsOpenToFalse =()=>{
+      setModalIsOpen(false)
+  }
 
   useEffect(() => {
     loadUsersExams();
   }, []);
 
-  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
-  const handleOpenFeedbackModal = () => {
-    setOpenFeedbackModal(true);
-  };
-
-  const handleCloseFeedbackModal = () => {
-    setOpenFeedbackModal(false);
-  };
 
   return (
     <>
@@ -143,47 +141,16 @@ const ExamsPage = () => {
             <Typography style={{ marginTop: 20 }}>
               You have {userExams && userExams.length} exams in your dashboard.
             </Typography>
-            <IconButton aria-label="next" onClick={handleOpenFeedbackModal}>
+            <IconButton aria-label="next" onClick={setModalIsOpenToTrue}>
               <PlaylistAddCheck sx={{ height: 38, width: 38 }} />
               Upload/Create Exam
             </IconButton>
             <Modal
-              open={openFeedbackModal}
-              onClose={handleCloseFeedbackModal}
+              isOpen={modalIsOpen}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
-            >
-              <Box sx={styleOfModal}>
-                <Typography id="modal-modal-title" variant="h6">
-                  Upload your csv file
-                </Typography>
-                <label htmlFor="contained-button-file">
-                  <UploadInput
-                    accept=".csv"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <Button variant="contained" component="span">
-                    Upload
-                  </Button>
-                </label>
-                <DownloadButton />
-
-
-                <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-                <Button
-                  variant="contained"
-                  color="success"
-                  style={{ height: 40 }}
-                  onClick={() => {
-                    handleCloseFeedbackModal();
-                  }}
-                >
-                  Submit
-                </Button>
-              </Box>
-            </Modal>
+              onRequestClose={()=> setModalIsOpen(false)}
+            ><ModalUpload /></Modal>
           </Item>
         </Grid>
         <Grid item xs={8}>
@@ -196,20 +163,7 @@ const ExamsPage = () => {
     </>
   );
 };
-const UploadInput = styled("input")({
-  display: "none",
-});
-const styleOfModal = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),

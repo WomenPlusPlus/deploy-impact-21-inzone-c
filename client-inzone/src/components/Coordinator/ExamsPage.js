@@ -24,35 +24,13 @@ import {
   PlaylistAddCheck,
   Check
 } from "@mui/icons-material";
+import DownloadButton from "../DownloadButton";
+
 const ExamsPage = () => {
+
   const [loading, setLoading] = useState(true);
   const [userExams, setUsersExams] = useState();
   const [examInfo, setExamInfo] = useState();
-
-  const renderUserExam = (exams) => {
-    return (
-      <>
-        {exams.map((exam) => (
-          <>
-            <ListItem
-              alignItems="flex-start"
-              secondaryAction={
-                <IconButton edge="end" aria-label="delete">
-                  <Check />
-                </IconButton>
-              }
-            >
-              <ListItemText
-                primary={exam.examId.name}
-                secondary={exam.userId.name}
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </>
-        ))}
-      </>
-    );
-  };
 
   const loadUsersExams = () => {
     // refugeeCampId of User => JSON.parse(localStorage.getItem("userInformation")).refugeeCampId.objectId
@@ -102,6 +80,33 @@ const ExamsPage = () => {
       .catch((err) => console.log(err));
   };
 
+
+  const renderUserExam = (exams) => {
+    return (
+      <>
+        {exams.map((exam) => (
+          <>
+            <ListItem
+              alignItems="flex-start"
+              secondaryAction={
+                <IconButton edge="end" aria-label="delete">
+                  <Check />
+                </IconButton>
+              }
+            >
+              <ListItemText
+                primary={exam.examId.name}
+                secondary={exam.userId.name}
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+          </>
+        ))}
+      </>
+    );
+  };
+
+
   useEffect(() => {
     loadUsersExams();
   }, []);
@@ -110,6 +115,7 @@ const ExamsPage = () => {
   const handleOpenFeedbackModal = () => {
     setOpenFeedbackModal(true);
   };
+
   const handleCloseFeedbackModal = () => {
     setOpenFeedbackModal(false);
   };
@@ -149,11 +155,11 @@ const ExamsPage = () => {
             >
               <Box sx={styleOfModal}>
                 <Typography id="modal-modal-title" variant="h6">
-                  You can upload your csv file here!
+                  Upload your csv file
                 </Typography>
                 <label htmlFor="contained-button-file">
                   <UploadInput
-                    accept="image/*"
+                    accept=".csv"
                     id="contained-button-file"
                     multiple
                     type="file"
@@ -162,13 +168,9 @@ const ExamsPage = () => {
                     Upload
                   </Button>
                 </label>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ marginTop: 20 }}
-                >
-                  Download The Exam Template CSV File
-                </Button>
+                <DownloadButton></DownloadButton>
+
+
                 <Divider style={{ marginTop: 20, marginBottom: 20 }} />
                 <Button
                   variant="contained"

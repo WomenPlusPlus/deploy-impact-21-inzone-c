@@ -15,7 +15,7 @@ import {
   Modal,
   TextField,
   Divider,
-  Button
+  Button,
 } from "@mui/material";
 import {
   Download,
@@ -143,8 +143,8 @@ const ExamsPage = () => {
   return (
     <>
       <Grid container spacing={2} style={examInfo && { display: "none" }}>
-        <Grid item xs={4}>
-          <Item>
+        <Grid item xs={3} style={styles.dashboard}>
+          <Item style={{ marginLeft: 40, marginRight: 40}}>
             <FormControl variant="standard">
               <Input
                 id="input-with-icon-adornment"
@@ -160,7 +160,7 @@ const ExamsPage = () => {
               <Apps />
               <ViewWeek />
             </Typography>
-            <Typography style={{ marginTop: 20 }}>
+            <Typography style={{ marginTop: 20, marginBottom:450 }}>
               You have {exams && exams.length} exams in your dashboard.
             </Typography>
           </Item>
@@ -168,18 +168,14 @@ const ExamsPage = () => {
         <Grid item xs={8}>
           <Item>
             {loading === true && <LinearProgress />}
-            <Grid container item spacing={3}>
+            <Grid container item spacing={5
+            }>
               {exams &&
                 exams.map((exam, index) => (
-                  <Grid item xs={12} key={index}>
-                    <Card sx={{ display: "flex" }}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <CardContent sx={{ flex: "1 0 auto" }}>
+                  <Grid item xs={6} key={index}>
+                    <Card  style={{paddingBottom: 50}}>
+              
+                        <CardContent style={{ marginTop: 10}} >
                           <Typography component="div" variant="h5">
                             {exam.name}
                           </Typography>
@@ -194,28 +190,28 @@ const ExamsPage = () => {
                             ).toDateString()}
                           </Typography>
                         </CardContent>
-                        <Box
-                          sx={{
-                            alignItems: "center",
-                            pl: 1,
-                            pb: 1,
-                          }}
-                        >
+                 
                           <IconButton
                             onClick={() => alert(JSON.stringify(exam))}
-                          >
-                            <Download sx={{ height: 38, width: 38 }} />
+                            style={styles.iconText}>
+                            <Download
+                              sx={{ height: 45, width: 30, color: "blue" }}
+                            />
                             Download
                           </IconButton>
-                          <IconButton onClick={() => loadExam(exam)}>
-                            <Create sx={{ height: 38, width: 38 }} />
+                          
+                          <IconButton 
+                          onClick={() => loadExam(exam)}
+                          style={styles.iconText}>
+                            <Create sx={{ height: 38, width: 25, color: "blue"}} />
                             Begin Exam
                           </IconButton>
                           <IconButton
                             aria-label="next"
                             onClick={handleOpenFeedbackModal}
+                            style={styles.iconText}
                           >
-                            <PlaylistAddCheck sx={{ height: 38, width: 38 }} />
+                            <PlaylistAddCheck sx={{ height: 38, width: 38, color: "blue" }} />
                             Feedback
                           </IconButton>
                           <Modal
@@ -248,7 +244,9 @@ const ExamsPage = () => {
                                 style={{ marginTop: 20 }}
                                 defaultValue="I am glad you like it. We tried to ask hard but you finished it successfully."
                               />
-                              <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+                              <Divider
+                                style={{ marginTop: 20, marginBottom: 20 }}
+                              />
                               <Button
                                 variant="contained"
                                 color="success"
@@ -261,8 +259,6 @@ const ExamsPage = () => {
                               </Button>
                             </Box>
                           </Modal>
-                        </Box>
-                      </Box>
                     </Card>
                   </Grid>
                 ))}
@@ -270,7 +266,12 @@ const ExamsPage = () => {
           </Item>
         </Grid>
       </Grid>
-      {examInfo && <ExamStepHandlingComponent examInfo={examInfo} finishExam={(finishExam) => finishExam && setExamInfo(undefined)} />}
+      {examInfo && (
+        <ExamStepHandlingComponent
+          examInfo={examInfo}
+          finishExam={(finishExam) => finishExam && setExamInfo(undefined)}
+        />
+      )}
     </>
   );
 };
@@ -279,10 +280,20 @@ const styleOfModal = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 200,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
+
+const styles = {
+  iconText:{
+    fontSize:15,
+  },
+  dashboard:{
+    height:200,
+    paddingBottom:100,
+  },
+}
 export default ExamsPage;

@@ -168,7 +168,7 @@ const ExamsPage = () => {
                     Upload
                   </Button>
                 </label>
-                <DownloadButton></DownloadButton>
+                <DownloadButton />
 
 
                 <Divider style={{ marginTop: 20, marginBottom: 20 }} />

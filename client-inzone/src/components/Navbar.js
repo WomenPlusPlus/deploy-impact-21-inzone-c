@@ -43,12 +43,11 @@ function Navbar() {
   }
 
   useEffect(() => {
-
     if (!JSON.parse(localStorage.getItem("userInformation"))) {
       history.push("/login");
       window.location.reload(false)
     }
-  });
+  }, []);
 
   const handleThemeChange = (event) => {
     const { checked } = event.target
@@ -93,8 +92,8 @@ function Navbar() {
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
-                ? this.props.history.push("/student")
-                : this.props.history.push("/coordinator")
+                ? history.push("/student")
+                : history.push("/coordinator")
             }
           >
             <Home />
@@ -108,8 +107,8 @@ function Navbar() {
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
-                ? this.props.history.push("/student/chat")
-                : this.props.history.push("/coordinator/chat")
+                ? history.push("/student/chat")
+                : history.push("/coordinator/chat")
             }
           >
             <Chat />
@@ -123,8 +122,8 @@ function Navbar() {
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
-                ? this.props.history.push("/student/notifications")
-                : this.props.history.push("/coordinator/notifications")
+                ? history.push("/student/notifications")
+                : history.push("/coordinator/notifications")
             }
           >
             <Notifications />
@@ -138,8 +137,8 @@ function Navbar() {
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
-                ? this.props.history.push("/student/exams")
-                : this.props.history.push("/coordinator/exams")
+                ? history.push("/student/exams")
+                : history.push("/coordinator/exams")
             }
           >
             <Assignment />
@@ -153,8 +152,8 @@ function Navbar() {
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
-                ? this.props.history.push("/student/settings")
-                : this.props.history.push("/coordinator/settings")
+                ? history.push("/student/settings")
+                : history.push("/coordinator/settings")
             }
           >
             <Settings />
@@ -166,7 +165,7 @@ function Navbar() {
             aria-label="open drawer"
             onClick={() => {
               localStorage.removeItem("userInformation");
-              this.props.history.push("/login");
+              history.push("/login");
               window.location.reload(false)
             }}
           >

@@ -2,11 +2,11 @@ import React from "react";
 
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
-import ChatPage from "./Student/ChatPage";
-import NotificationPage from "./Student/NotificationPage";
+import ChatPage from "./ChatPage";
+import NotificationPage from "./NotificationPage";
 import ExamsPage from "./Student/ExamsPage";
 import StudentHomePage from "./Student/StudentHomePage";
-import SettingsPage from "./Student/SettingsPage";
+import SettingsPage from "./SettingsPage";
 const StudentRoutes = () => {
   // I solved the refresh problem while i was doing changing some routes. Our URL's could be different for coordinator and student.
   return (

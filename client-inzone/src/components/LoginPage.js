@@ -71,9 +71,9 @@ class LoginPage extends Component {
           // localStorage.setItem("rememberMe", rememberMe); -> Comment this for now about rememberMe feature.
           // localStorage.setItem("userInfo", rememberMe ? user : ""); -> Comment this for now about rememberMe feature.
           localStorage.setItem("userInformation", JSON.stringify(json));
-          if(json.role === "student"){
+          if (json.role === "student") {
             this.props.history.push("/student");
-          }else{
+          } else {
             this.props.history.push("/coordinator");
           }
         }

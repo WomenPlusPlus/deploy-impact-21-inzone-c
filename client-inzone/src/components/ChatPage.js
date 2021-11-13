@@ -11,8 +11,8 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { MessageLeft, MessageRight } from "../Messenger/Message";
-import { TextInput } from "../Messenger/TextInput";
+import { MessageLeft, MessageRight } from "./Messenger/Message";
+import { TextInput } from "./Messenger/TextInput";
 
 const ChatPage = () => {
   const renderRow = () => {

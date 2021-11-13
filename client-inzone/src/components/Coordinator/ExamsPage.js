@@ -20,15 +20,15 @@ import {
   Apps,
   ViewWeek,
   PlaylistAddCheck,
-  Check
+  Check,
 } from "@mui/icons-material";
 import ModalUpload from "../ModalUpload";
 
 const ExamsPage = () => {
-
   const [loading, setLoading] = useState(true);
   const [userExams, setUsersExams] = useState();
   const [examInfo, setExamInfo] = useState();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const loadUsersExams = () => {
     // refugeeCampId of User => JSON.parse(localStorage.getItem("userInformation")).refugeeCampId.objectId
@@ -81,8 +81,8 @@ const ExamsPage = () => {
   const renderUserExam = (exams) => {
     return (
       <>
-        {exams.map((exam) => (
-          <>
+        {exams.map((exam, index) => (
+          <div key={index++}>
             <ListItem
               alignItems="flex-start"
               secondaryAction={
@@ -97,26 +97,23 @@ const ExamsPage = () => {
               />
             </ListItem>
             <Divider variant="inset" component="li" />
-          </>
+          </div>
         ))}
       </>
     );
   };
 
-  const [modalIsOpen,setModalIsOpen] = useState(false);
+  const setModalIsOpenToTrue = () => {
+    setModalIsOpen(true);
+  };
 
-  const setModalIsOpenToTrue =()=>{
-      setModalIsOpen(true)
-  }
-
-  const setModalIsOpenToFalse =()=>{
-      setModalIsOpen(false)
-  }
+  const setModalIsOpenToFalse = () => {
+    setModalIsOpen(false);
+  };
 
   useEffect(() => {
     loadUsersExams();
   }, []);
-
 
   return (
     <>
@@ -145,12 +142,6 @@ const ExamsPage = () => {
               <PlaylistAddCheck sx={{ height: 38, width: 38 }} />
               Upload/Create Exam
             </IconButton>
-            <Modal
-              isOpen={modalIsOpen}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-              onRequestClose={setModalIsOpenToFalse}
-            ><ModalUpload /></Modal>
           </Item>
         </Grid>
         <Grid item xs={8}>
@@ -160,6 +151,10 @@ const ExamsPage = () => {
           </Item>
         </Grid>
       </Grid>
+      <ModalUpload
+        modalIsOpen={modalIsOpen}
+        closeModal={(closeTime) => closeTime && setModalIsOpenToFalse()}
+      />
     </>
   );
 };

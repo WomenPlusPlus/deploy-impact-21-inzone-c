@@ -149,7 +149,7 @@ const ExamsPage = () => {
               isOpen={modalIsOpen}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
-              onRequestClose={()=> setModalIsOpen(false)}
+              onRequestClose={setModalIsOpenToFalse}
             ><ModalUpload /></Modal>
           </Item>
         </Grid>

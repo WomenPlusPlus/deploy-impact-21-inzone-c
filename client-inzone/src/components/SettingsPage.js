@@ -32,7 +32,6 @@ const SettingsPage = () => {
                 fullWidth
                 id="username"
                 onChange={(input) => {
-                  console.log(input);
                 }}
                 label="Username"
                 name="username"

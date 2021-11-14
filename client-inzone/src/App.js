@@ -1,9 +1,9 @@
-import { ThemeProvider } from '@material-ui/styles';
 import React, { useContext } from 'react'
 import createRoutes from "./components/Routes";
 import { theme } from "./themes/themes";
 import { ThemeContext } from "./themes/Provider";
 import "./index.css";
+import { useTheme } from '@mui/styles';
 
 const getStyles = (mode) => ({
   header: {
@@ -27,10 +27,10 @@ const getStyles = (mode) => ({
 function App() {
 
   const { mode } = useContext(ThemeContext);
-  const styles = getStyles(mode);
+  useTheme(mode);
 
   return (
-    <div className="App" style={styles.app}>
+    <div className="App">
       {createRoutes()}
     </div>
 

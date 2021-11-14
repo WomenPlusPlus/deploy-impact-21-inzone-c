@@ -5,7 +5,6 @@ import DownloadButton from "./DownloadButton";
 
 const ModalUpload = (props) => {
   const { modalIsOpen, closeModal } = props;
-  console.log(props);
 
   return (
     <Modal

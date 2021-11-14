@@ -15,16 +15,12 @@ import {
   Assignment,
 } from "@mui/icons-material";
 import { withRouter, useHistory } from "react-router-dom";
-import { CustomThemeContext } from '../themes/CustomThemeProvider'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import SwitchUI from '@material-ui/core/Switch'
+import ThemeSwitch from "./ThemeSwitch";
 
 
 
 function Navbar() {
-  const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const history = useHistory();
-  const isDark = Boolean(currentTheme === 'dark');
 
   const styles = {
     navbar: {
@@ -41,22 +37,12 @@ function Navbar() {
       fontWeight: 700,
     }
   }
-
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("userInformation"))) {
       history.push("/login");
       window.location.reload(false)
     }
   }, []);
-
-  const handleThemeChange = (event) => {
-    const { checked } = event.target
-    if (checked) {
-      setTheme('dark')
-    } else {
-      setTheme('normal')
-    }
-  }
 
   return (
     <Box sx={{ pb: 7 }}>
@@ -78,10 +64,7 @@ function Navbar() {
           </Typography>
           <IconButton
             style={styles.navIcon}>
-            <FormControlLabel
-
-              control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
-            />
+            <ThemeSwitch />
           </IconButton>
           <IconButton
             style={styles.navIcon}

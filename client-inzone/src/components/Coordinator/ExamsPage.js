@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import {
   Typography,
   Paper,
-  Modal,
   Grid,
   LinearProgress,
   IconButton,

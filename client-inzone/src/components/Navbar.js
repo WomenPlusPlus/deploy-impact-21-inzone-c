@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect} from "react";
+
 import {
   Box,
   AppBar,
@@ -162,3 +163,4 @@ function Navbar() {
 }
 
 export default withRouter(Navbar);
+

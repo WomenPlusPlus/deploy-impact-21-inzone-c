@@ -12,7 +12,7 @@ import {
   Modal,
   TextField,
   Divider,
-  Button
+  Button,
 } from "@mui/material";
 import {
   Download,
@@ -149,101 +149,97 @@ const ExamsPage = () => {
             style={{ minHeight: '100vh' }}>
             <Item>
               {loading === true && <LinearProgress />}
-              <Grid container item spacing={3}>
+              <Grid container item spacing={5
+              }>
                 {exams &&
                   exams.map((exam, index) => (
-                    <Grid item xs={12} key={index}>
-                      <Card sx={{ display: "flex" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                          }}
-                        >
-                          <CardContent sx={{ flex: "1 0 auto" }}>
-                            <Typography component="div" variant="h5">
-                              {exam.name}
-                            </Typography>
-                            <Typography
-                              variant="subtitle1"
-                              color="text.secondary"
-                              component="div"
-                            >
-                              You will start at{" "}
-                              {new Date(
-                                exam.firstSectionStartDate.iso
-                              ).toDateString()}
-                            </Typography>
-                          </CardContent>
-                          <Box
-                            sx={{
-                              alignItems: "center",
-                              pl: 1,
-                              pb: 1,
-                            }}
+                    <Grid item xs={6} key={index}>
+                      <Card style={{ paddingBottom: 50 }}>
+
+                        <CardContent style={{ marginTop: 10 }} >
+                          <Typography component="div" variant="h5">
+                            {exam.name}
+                          </Typography>
+                          <Typography
+                            variant="subtitle1"
+                            color="text.secondary"
+                            component="div"
                           >
-                            <IconButton
-                              onClick={() => alert(JSON.stringify(exam))}
+                            You will start at{" "}
+                            {new Date(
+                              exam.firstSectionStartDate.iso
+                            ).toDateString()}
+                          </Typography>
+                        </CardContent>
+
+                        <IconButton
+                          onClick={() => alert(JSON.stringify(exam))}
+                          style={styles.iconText}>
+                          <Download
+                            sx={{ height: 45, width: 30, color: "blue" }}
+                          />
+                          Download
+                        </IconButton>
+
+                        <IconButton
+                          onClick={() => loadExam(exam)}
+                          style={styles.iconText}>
+                          <Create sx={{ height: 38, width: 25, color: "blue" }} />
+                          Begin Exam
+                        </IconButton>
+                        <IconButton
+                          aria-label="next"
+                          onClick={handleOpenFeedbackModal}
+                          style={styles.iconText}
+                        >
+                          <PlaylistAddCheck sx={{ height: 38, width: 38, color: "blue" }} />
+                          Feedback
+                        </IconButton>
+                        <Modal
+                          open={openFeedbackModal}
+                          onClose={handleCloseFeedbackModal}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={styleOfModal}>
+                            <Typography id="modal-modal-title" variant="h6">
+                              Here is your feedback and coordinator's feedback
+                              for you.
+                            </Typography>
+                            <TextField
+                              id="outlined-multiline-static"
+                              label="Your Feedback"
+                              multiline
+                              disabled
+                              rows={4}
+                              style={{ marginTop: 20 }}
+                              defaultValue="MCQ section was very hard. Live question section was very funny."
+                            />
+                            <Divider style={{ marginTop: 20 }} />
+                            <TextField
+                              id="outlined-multiline-static"
+                              label="Coordinator's Feedback"
+                              multiline
+                              disabled
+                              rows={4}
+                              style={{ marginTop: 20 }}
+                              defaultValue="I am glad you like it. We tried to ask hard but you finished it successfully."
+                            />
+                            <Divider
+                              style={{ marginTop: 20, marginBottom: 20 }}
+                            />
+                            <Button
+                              variant="contained"
+                              color="success"
+                              style={{ height: 40 }}
+                              onClick={() => {
+                                handleCloseFeedbackModal();
+                              }}
                             >
-                              <Download sx={{ height: 38, width: 38 }} />
-                              Download
-                            </IconButton>
-                            <IconButton onClick={() => loadExam(exam)}>
-                              <Create sx={{ height: 38, width: 38 }} />
-                              Begin Exam
-                            </IconButton>
-                            <IconButton
-                              aria-label="next"
-                              onClick={handleOpenFeedbackModal}
-                            >
-                              <PlaylistAddCheck sx={{ height: 38, width: 38 }} />
-                              Feedback
-                            </IconButton>
-                            <Modal
-                              open={openFeedbackModal}
-                              onClose={handleCloseFeedbackModal}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={styleOfModal}>
-                                <Typography id="modal-modal-title" variant="h6">
-                                  Here is your feedback and coordinator's feedback
-                                  for you.
-                                </Typography>
-                                <TextField
-                                  id="outlined-multiline-static"
-                                  label="Your Feedback"
-                                  multiline
-                                  disabled
-                                  rows={4}
-                                  style={{ marginTop: 20 }}
-                                  defaultValue="MCQ section was very hard. Live question section was very funny."
-                                />
-                                <Divider style={{ marginTop: 20 }} />
-                                <TextField
-                                  id="outlined-multiline-static"
-                                  label="Coordinator's Feedback"
-                                  multiline
-                                  disabled
-                                  rows={4}
-                                  style={{ marginTop: 20 }}
-                                  defaultValue="I am glad you like it. We tried to ask hard but you finished it successfully."
-                                />
-                                <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-                                <Button
-                                  variant="contained"
-                                  color="success"
-                                  style={{ height: 40 }}
-                                  onClick={() => {
-                                    handleCloseFeedbackModal();
-                                  }}
-                                >
-                                  Close
-                                </Button>
-                              </Box>
-                            </Modal>
+                              Close
+                            </Button>
                           </Box>
-                        </Box>
+                        </Modal>
                       </Card>
                     </Grid>
                   ))}
@@ -251,7 +247,12 @@ const ExamsPage = () => {
             </Item>
           </Grid>
         </Grid>
-        {examInfo && <ExamStepHandlingComponent examInfo={examInfo} finishExam={(finishExam) => finishExam && setExamInfo(undefined)} />}
+        {examInfo && (
+          <ExamStepHandlingComponent
+            examInfo={examInfo}
+            finishExam={(finishExam) => finishExam && setExamInfo(undefined)}
+          />
+        )}
       </Box>
     </>
   );
@@ -261,10 +262,20 @@ const styleOfModal = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 200,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
+
+const styles = {
+  iconText: {
+    fontSize: 15,
+  },
+  dashboard: {
+    height: 200,
+    paddingBottom: 100,
+  },
+}
 export default ExamsPage;

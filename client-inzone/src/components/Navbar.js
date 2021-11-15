@@ -62,10 +62,10 @@ function Navbar() {
           >
             Examify
           </Typography>
-          <IconButton
+          {/* <IconButton
             style={styles.navIcon}>
             <ThemeSwitch />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             style={styles.navIcon}
             size="large"

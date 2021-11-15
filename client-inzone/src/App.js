@@ -1,40 +1,28 @@
-import React, { useContext } from 'react'
-import createRoutes from "./components/Routes";
-import { theme } from "./themes/themes";
-import { ThemeContext } from "./themes/Provider";
-import "./index.css";
-import { useTheme } from '@mui/styles';
+import * as React from 'react';
+import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
+import createRoutes from './components/Routes'
+import { darkTheme } from './themes/dark';
 
-const getStyles = (mode) => ({
-  header: {
-    fontSize: 34,
-    fontWeight: "400"
-  },
-  app: {
-    height: "100%",
-    width: "100%",
-    padding: 16,
-    backgroundColor: theme[mode].backgroundColor
-  },
-  text: {
-    fontWeight: "200",
-    color: theme[mode].color
-  },
-  theme: {
-    color: theme[mode].highlight
-  }
-});
+const darkModeTheme = createTheme(darkTheme);
+
 function App() {
-
-  const { mode } = useContext(ThemeContext);
-  useTheme(mode);
-
+  useTheme();
   return (
+    <ThemeProvider theme={darkModeTheme}>
     <div className="App">
       {createRoutes()}
     </div>
-
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+
+// export default function DarkThemeWithCustomPalette() {
+//   return (
+    
+//       <MyApp />
+    
+//   );
+// }

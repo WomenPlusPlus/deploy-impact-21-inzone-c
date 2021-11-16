@@ -89,7 +89,9 @@ const ChatPage = () => {
   };
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid sx={{
+          height: '90vh'
+        }} container spacing={2}>
         <Grid item xs={4}>
           <Item>
             <List

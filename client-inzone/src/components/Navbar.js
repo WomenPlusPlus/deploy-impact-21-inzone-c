@@ -25,7 +25,7 @@ function Navbar() {
 
   const styles = {
     navbar: {
-      //  backgroundColor:"black"
+       backgroundColor:"#2B2E39"
     },
     navIcon: {
       marginRight: 40,

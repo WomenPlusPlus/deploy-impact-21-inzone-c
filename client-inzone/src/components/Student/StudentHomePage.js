@@ -5,7 +5,9 @@ import React from "react";
 const StudentHomePage = () => {
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid sx={{
+          height: '90vh'
+        }} container spacing={2}>
         <Grid item xs={12}>
           <Item>
             <Typography variant="h2">
@@ -29,6 +31,5 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.primary,
 }));
 export default StudentHomePage;

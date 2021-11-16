@@ -18,7 +18,9 @@ import { styled } from "@mui/material/styles";
 const SettingsPage = () => {
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid sx={{
+          height: '90vh'
+        }} container spacing={2}>
         <Grid item xs={12}>
           <Item>
             <Box

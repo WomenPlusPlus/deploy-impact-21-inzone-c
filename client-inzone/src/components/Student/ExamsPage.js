@@ -14,11 +14,7 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import {
-  Download,
-  Create,
-  PlaylistAddCheck,
-} from "@mui/icons-material";
+import { Download, Create, PlaylistAddCheck } from "@mui/icons-material";
 import ExamStepHandlingComponent from "./Exams/ExamStepHandlingComponent";
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -34,8 +30,9 @@ const ExamsPage = () => {
   const loadExams = () => {
     // refugeeCampId of User => JSON.parse(localStorage.getItem("userInformation")).refugeeCampId.objectId
     fetch(
-      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/Exam?where={"$or":[{"examLocation":{"__type":"Pointer","className":"RefugeeCamp","objectId":"${JSON.parse(localStorage.getItem("userInformation")).refugeeCampId
-        .objectId
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/Exam?where={"$or":[{"examLocation":{"__type":"Pointer","className":"RefugeeCamp","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).refugeeCampId
+          .objectId
       }"}},{"examLocation":null}]}&include=examLocation&include=createdBy`,
       {
         method: "GET",
@@ -135,28 +132,27 @@ const ExamsPage = () => {
 
   return (
     <>
-      <Box sx={{
-        width: 1023,
-        height: 1346,
-        backgroundColor: 'primary.background.default',
-      }}>
+      <Box
+        sx={{
+          height: '100vh'
+        }}
+      >
         <Grid style={examInfo && { display: "none" }}>
-          <Grid container
+          <Grid
+            container
             spacing={0}
             direction="column"
             alignItems="center"
             justifyContent="center"
-            style={{ minHeight: '100vh' }}>
+          >
             <Item>
               {loading === true && <LinearProgress />}
-              <Grid container item spacing={5
-              }>
+              <Grid container item spacing={5}>
                 {exams &&
                   exams.map((exam, index) => (
                     <Grid item xs={6} key={index}>
-                      <Card style={{ paddingBottom: 50 }}>
-
-                        <CardContent style={{ marginTop: 10 }} >
+                      <Card>
+                        <CardContent style={{ marginTop: 10 }}>
                           <Typography component="div" variant="h5">
                             {exam.name}
                           </Typography>
@@ -174,7 +170,8 @@ const ExamsPage = () => {
 
                         <IconButton
                           onClick={() => alert(JSON.stringify(exam))}
-                          style={styles.iconText}>
+                          style={styles.iconText}
+                        >
                           <Download
                             sx={{ height: 45, width: 30, color: "blue" }}
                           />
@@ -183,8 +180,11 @@ const ExamsPage = () => {
 
                         <IconButton
                           onClick={() => loadExam(exam)}
-                          style={styles.iconText}>
-                          <Create sx={{ height: 38, width: 25, color: "blue" }} />
+                          style={styles.iconText}
+                        >
+                          <Create
+                            sx={{ height: 38, width: 25, color: "blue" }}
+                          />
                           Begin Exam
                         </IconButton>
                         <IconButton
@@ -192,7 +192,9 @@ const ExamsPage = () => {
                           onClick={handleOpenFeedbackModal}
                           style={styles.iconText}
                         >
-                          <PlaylistAddCheck sx={{ height: 38, width: 38, color: "blue" }} />
+                          <PlaylistAddCheck
+                            sx={{ height: 38, width: 38, color: "blue" }}
+                          />
                           Feedback
                         </IconButton>
                         <Modal
@@ -277,5 +279,5 @@ const styles = {
     height: 200,
     paddingBottom: 100,
   },
-}
+};
 export default ExamsPage;

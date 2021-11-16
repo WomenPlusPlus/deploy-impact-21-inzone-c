@@ -135,12 +135,14 @@ const NotificationPage = () => {
     );
   };
   return (
-    <div>
-      <Grid container spacing={2}>
+    <div >
+      <Grid sx={{
+      height: '90vh'
+    }} container spacing={2}>
         <Grid item xs={12}>
           <Item>
             <List
-              sx={{ width: "100%", paddingLeft: '30%', paddingRight: "30%", bgcolor: "background.paper" }}
+              sx={{  paddingLeft: '30%', paddingRight: "30%", bgcolor: "background.paper" }}
             >
               {renderRow()}
             </List>
@@ -154,6 +156,5 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.primary,
 }));
 export default NotificationPage;

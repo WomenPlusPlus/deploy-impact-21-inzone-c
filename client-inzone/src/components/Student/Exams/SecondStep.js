@@ -13,27 +13,29 @@ import {
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  paperStyles: {
-    padding: "20px",
-    textAlign: "center",
-  },
   chipStyle: {
     cursor: "pointer",
     margin: "10px 5px",
     background: "black",
     color: "white",
   },
+  chipNextStyle: {
+    backgroundColor: "#F8BE48",
+    color: "#2B2E39",
+    fontWeight: "bold",
+    fontSize: 13,
+    borderRadius: 5,
+    width: 70,
+    margin: "10px 5px",
+  },
   navButtons: {
     display: "flex",
     justifyContent: "space-between",
   },
-  questionText: {
-    padding: "20px",
-  },
 }));
 
 const SecondStep = (props) => {
-  const [seconds, setSeconds] = useState(15);
+  const [seconds, setSeconds] = useState(555);
   const classes = useStyles();
   const [questionNo, setQuestionNo] = useState(0);
   const nextQuestion = () => {
@@ -52,61 +54,88 @@ const SecondStep = (props) => {
   return (
     <>
       <Container maxWidth="md">
-        <Typography sx={{ mt: 2, mb: 1 }} style={{ color: "black" }}>
+        <Typography sx={styles.examQuestion}>
           {props.examInfo.mcq[questionNo].question}
         </Typography>
-        <Paper className={classes.paperStyles} rounded elevation={5}>
-          <div>
-            <Grid container spacing={2} justify="center">
-              <FormControl component="fieldset">
-                <RadioGroup aria-label="options" name="radio-buttons-group">
-                  <FormControlLabel
-                    label={props.examInfo.mcq[questionNo].answerA}
-                    control={<Radio />}
-                    value={1}
-                  />
-                  <FormControlLabel
-                    label={props.examInfo.mcq[questionNo].answerB}
-                    control={<Radio />}
-                    value={2}
-                  />
-                  <FormControlLabel
-                    label={props.examInfo.mcq[questionNo].answerC}
-                    control={<Radio />}
-                    value={3}
-                  />
-                  <FormControlLabel
-                    label={props.examInfo.mcq[questionNo].answerD}
-                    control={<Radio />}
-                    value={4}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-          </div>
-        </Paper>
+        <div>
+          <Grid container spacing={2} justify="center">
+            <FormControl component="fieldset">
+              <RadioGroup aria-label="options" name="radio-buttons-group">
+                <FormControlLabel
+                  label={props.examInfo.mcq[questionNo].answerA}
+                  style={styles.optionStyle}
+                  control={<Radio style={styles.radioStyle} />}
+                  value={1}
+                />
+                <FormControlLabel
+                  label={props.examInfo.mcq[questionNo].answerB}
+                  style={styles.optionStyle}
+                  control={<Radio style={styles.radioStyle} />}
+                  value={2}
+                />
+                <FormControlLabel
+                  label={props.examInfo.mcq[questionNo].answerC}
+                  style={styles.optionStyle}
+                  control={<Radio style={styles.radioStyle} />}
+                  value={3}
+                />
+                <FormControlLabel
+                  label={props.examInfo.mcq[questionNo].answerD}
+                  style={styles.optionStyle}
+                  control={<Radio style={styles.radioStyle} />}
+                  value={4}
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+        </div>
         <div className={classes.navButtons}>
           <Chip
             className={classes.chipStyle}
             label={questionNo + 1 + "/" + props.examInfo.mcq.length}
           />
-          <Chip className={classes.chipStyle} label={seconds} />
           {(props.examInfo.mcq.length === questionNo + 1) === true ? (
             <Chip
-              className={classes.chipStyle}
+              className={classes.chipNextStyle}
               onClick={() => props.finishExam(true)}
               label="Finish"
             />
           ) : (
             <Chip
-              className={classes.chipStyle}
+              className={classes.chipNextStyle}
               onClick={() => nextQuestion()}
               label="Next"
             />
           )}
+          <Chip className={classes.chipStyle} label={seconds} />
         </div>
       </Container>
     </>
   );
+};
+const styles = {
+  examQuestion: {
+    mt: 2,
+    mb: 1,
+    color: "#E3E4E5",
+    textAlign: "left",
+    fontSize: 20,
+    marginBottom: 3,
+  },
+  optionStyle: {
+    borderWidth: 1,
+    borderColor: "#E3E4E5",
+    borderStyle: "solid",
+    borderRadius: 5,
+    width: "128vh",
+    margin: 10,
+  },
+  radioStyle: {
+    backgroundColor: "#E3E4E5",
+    margin: 10,
+    width: 32,
+    height: 32,
+    textAlign: "left",
+  },
 };
 export default SecondStep;

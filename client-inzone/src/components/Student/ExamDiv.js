@@ -28,7 +28,7 @@ const ExamDiv = (props) => {
         >
           <IconButton onClick={() => loadExam(true)} style={styles.iconText}>
             <Create />
-            Begin Exam
+            Begin the exam
           </IconButton>
           <IconButton
             aria-label="next"
@@ -36,7 +36,7 @@ const ExamDiv = (props) => {
             style={styles.iconText}
           >
             <PlaylistAddCheck />
-            Results / Feedback
+            Results of exam
           </IconButton>
         </div>
       </Box>
@@ -48,10 +48,14 @@ const styles = {
     fontSize: 15,
     width: "11rem",
     float: "right",
-    marginBottom: 5,
-    color: "#20222B",
-    background: "#F8BE48",
-    borderRadius: 0,
+    margin: 7,
+    color: "#E3E4E5",
+    background: "#2B2E39",
+    borderColor: "#F8BE48",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderStyle: "solid",
+    justifyContent: 'space-between'
   },
   examTitleText: {
     fontSize: 20,
@@ -68,10 +72,12 @@ const styles = {
   examBox: {
     justifyContent: "space-between",
     alignItems: "center",
-    height: 100,
+    height: 130,
     display: "flex",
     border: "1px solid black",
-    padding: 8,
+    backgroundColor: '#20222B',
+    padding: 10,
+    borderRadius: 10,
   },
 };
 export default ExamDiv;

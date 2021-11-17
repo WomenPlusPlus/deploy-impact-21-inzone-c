@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import { Box, Paper, Grid, LinearProgress } from "@mui/material";
+import {
+  Divider,
+  Box,
+  Paper,
+  Grid,
+  LinearProgress,
+  Typography,
+  CssBaseline
+} from "@mui/material";
 import ExamStepHandlingComponent from "./Exams/ExamStepHandlingComponent";
 import ResultFeedbackModal from "./ResultFeedbackModal";
 import ExamDiv from "./ExamDiv";
@@ -144,10 +152,18 @@ const ExamsPage = () => {
           height: "100vh",
         }}
       >
+        <CssBaseline />
         <Grid style={examInfo && { display: "none" }}>
           <Grid container spacing={0} justifyContent="center">
-            <Item>
+            <Item style={{ paddingLeft: 80, paddingRight: 80 }}>
               {loading === true && <LinearProgress />}
+              <div style={{ justifyContent: "space-between", display: "flex", marginBottom: 10 }}>
+                <Typography sx={styles.headerTitle}>Exams</Typography>
+                <Typography sx={styles.headerInfo}>
+                  You have {exams && exams.length} exams in your dashboard.
+                </Typography>
+              </div>
+              <Divider style={{ marginBottom: 30 }} />
               <Grid container item spacing={5}>
                 {exams &&
                   exams.map((exam, index) => (
@@ -190,49 +206,15 @@ const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#2B2E39",
 }));
 const styles = {
-  modal: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 200,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
+  headerTitle: {
+    float: "left",
+    fontSize: 25,
+    color: "#E3E4E5",
   },
-  iconText: {
-    fontSize: 15,
-    width: "11rem",
+  headerInfo: {
     float: "right",
-    marginBottom: 5,
-    color: "#20222B",
-    background: "#F8BE48",
-    borderRadius: 0,
-  },
-  examTitleText: {
-    fontSize: 20,
-    color: "#E3E4E5",
-    mt: 2,
-    mb: 1,
-  },
-  examDescriptionText: {
     fontSize: 10,
-    color: "#E3E4E5",
-    mt: 2,
-    mb: 1,
-  },
-  dashboard: {
-    height: 200,
-    paddingBottom: 100,
-  },
-  examBox: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: 100,
-    display: "flex",
-    border: "1px solid black",
-    padding: 8,
+    marginTop: 3,
   },
 };
 export default ExamsPage;

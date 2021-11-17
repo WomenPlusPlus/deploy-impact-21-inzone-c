@@ -83,85 +83,104 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box sx={styles.bigBox}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography style={styles.headerText}>Sign in</Typography>
           <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            component="form"
+            onSubmit={this.handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box
-              component="form"
-              onSubmit={this.handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                onChange={(input) => {
-                  this.setState({ username: input.target.value });
-                }}
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                onChange={(input) =>
-                  this.setState({ password: input.target.value })
-                }
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              style={{ color: "#E3E4E5" }}
+              id="username"
+              onChange={(input) => {
+                this.setState({ username: input.target.value });
+              }}
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              style={{ color: "#E3E4E5" }}
+              onChange={(input) =>
+                this.setState({ password: input.target.value })
+              }
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+              /> */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={styles.signInButton}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" style={styles.link}>
+                  Forgot password?
+                </Link>
               </Grid>
-            </Box>
+              <Grid item>
+                <Link href="#" style={styles.link}>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
-        </Container>
-      </ThemeProvider>
+        </Box>
+      </Container>
     );
   }
 }
-
+const styles = {
+  bigBox: {
+    marginTop: 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#20222B",
+  },
+  headerText: {
+    fontSize: 20,
+    color: "#E3E4E5",
+  },
+  signInButton: {
+    fontSize: 15,
+    width: "15rem",
+    margin: 7,
+    color: "#E3E4E5",
+    background: "#2B2E39",
+    borderColor: "#F8BE48",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderStyle: "solid",
+  },
+  link: {
+    fontSize: 15,
+    color: "#E3E4E5",
+  },
+};
 export default withRouter(LoginPage);

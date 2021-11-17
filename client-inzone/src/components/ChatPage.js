@@ -9,6 +9,7 @@ import {
   List,
   Grid,
   Paper,
+  CssBaseline
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { MessageLeft, MessageRight } from "./Messenger/Message";
@@ -89,6 +90,7 @@ const ChatPage = () => {
   };
   return (
     <div>
+      <CssBaseline />
       <Grid sx={{
           height: '90vh'
         }} container spacing={2}>

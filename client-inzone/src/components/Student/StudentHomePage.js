@@ -1,10 +1,11 @@
-import { Typography, Grid, Paper, Link } from "@mui/material";
+import { Typography, Grid, Paper, Link, CssBaseline } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
 
 const StudentHomePage = () => {
   return (
     <div>
+      <CssBaseline />
       <Grid sx={{
           height: '90vh'
         }} container spacing={2}>

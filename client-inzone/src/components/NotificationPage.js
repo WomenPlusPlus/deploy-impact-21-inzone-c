@@ -9,6 +9,7 @@ import {
   List,
   Grid,
   Paper,
+  CssBaseline
 } from "@mui/material";
 import { Check, CircleNotifications } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
@@ -136,6 +137,7 @@ const NotificationPage = () => {
   };
   return (
     <div >
+      <CssBaseline />
       <Grid sx={{
       height: '90vh'
     }} container spacing={2}>

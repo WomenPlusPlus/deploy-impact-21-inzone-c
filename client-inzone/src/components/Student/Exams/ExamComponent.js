@@ -93,6 +93,29 @@ const ExamComponent = (props) => {
             onClick={() => {
               props.closeExamStepsTotally(true, false);
             }}
+            disabled={() => {
+              fetch(
+                `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+                  props.examInfo.examId
+                }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+                  JSON.parse(localStorage.getItem("userInformation")).objectId
+                }"}}]}`,
+                {
+                  method: "GET",
+                  headers: {
+                    "X-Parse-Application-Id": "inzonec",
+                  },
+                }
+              )
+                .then((response) => response.json())
+                .then((json) => {
+                  if(json.results[0].capstoneProjectFeedback !== undefined || json.results[0].capstoneProjectFeedback !== null){
+                    return true;
+                  }
+                  return false;
+                })
+                .catch((err) => console.log(err));
+            }}
           >
             Begin
           </Button>

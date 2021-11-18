@@ -225,7 +225,7 @@ const ExamStepHandlingComponent = (props) => {
         ) : (
           <>
             <Grid item xs={12}>
-              <Item>
+              <Item style={{paddingLeft: 150, paddingRight: 150, paddingBottom: 70}}>
                 {openSecondStep === true ? (
                   <SecondStep
                     examInfo={props.examInfo}
@@ -236,9 +236,12 @@ const ExamStepHandlingComponent = (props) => {
                 ) : (
                   <ThirdStep
                     examInfo={props.examInfo}
+                    backExam={(backExam) => backExam && setCloseExamComponent(false)}
                     submitExam={(submitExam) => {
                       if (submitExam === true) {
                         setCloseExamComponent(false);
+                        localStorage.removeItem("exam")
+                        localStorage.removeItem("userAnswers")
                         props.finishExam(true);
                       }
                     }}

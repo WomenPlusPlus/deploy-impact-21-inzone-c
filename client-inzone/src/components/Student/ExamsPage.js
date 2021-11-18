@@ -7,7 +7,7 @@ import {
   Grid,
   LinearProgress,
   Typography,
-  CssBaseline
+  CssBaseline,
 } from "@mui/material";
 import ExamStepHandlingComponent from "./Exams/ExamStepHandlingComponent";
 import ResultFeedbackModal from "./ResultFeedbackModal";
@@ -52,6 +52,7 @@ const ExamsPage = () => {
       secondSectionEndDate: exam.secondSectionEndDate.iso,
       thirdSectionEndDate: exam.thirdSectionEndDate.iso,
       firstSectionLink: exam.firstSectionLink,
+      mcqTotalTime: exam.mcqTotalTime,
       mcq: {},
     };
     fetch(
@@ -70,8 +71,8 @@ const ExamsPage = () => {
         examObject.mcq = questions;
       })
       .then(() => {
-        // TODO: We will get user's answer here!
-        console.log(examObject);
+        // TODO: We need to encrypt the data here.
+        localStorage.setItem("exam", JSON.stringify(examObject));
         setExamInfo(examObject);
       })
       .catch((err) => console.log(err));
@@ -157,7 +158,13 @@ const ExamsPage = () => {
           <Grid container spacing={0} justifyContent="center">
             <Item style={{ paddingLeft: 80, paddingRight: 80 }}>
               {loading === true && <LinearProgress />}
-              <div style={{ justifyContent: "space-between", display: "flex", marginBottom: 10 }}>
+              <div
+                style={{
+                  justifyContent: "space-between",
+                  display: "flex",
+                  marginBottom: 10,
+                }}
+              >
                 <Typography sx={styles.headerTitle}>Exams</Typography>
                 <Typography sx={styles.headerInfo}>
                   You have {exams && exams.length} exams in your dashboard.

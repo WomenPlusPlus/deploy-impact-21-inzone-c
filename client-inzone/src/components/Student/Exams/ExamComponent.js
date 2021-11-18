@@ -25,12 +25,62 @@ const ExamComponent = (props) => {
           </Typography>
           <Button
             onClick={() => {
+              if (JSON.parse(localStorage.getItem("userAnswers")) === null) {
+                let objectForUserAnswers = {
+                  isFinished: false,
+                  remainingTime: props.examInfo.mcqTotalTime,
+                };
+                localStorage.setItem(
+                  "userAnswers",
+                  JSON.stringify(objectForUserAnswers)
+                );
+              } else {
+                let timeForLastAnswer = 999999999999999;
+                for (const [key, value] of Object.entries(
+                  JSON.parse(localStorage.getItem("userAnswers"))
+                )) {
+                  if (key.includes("question")) {
+                    if (value.time < timeForLastAnswer) {
+                      timeForLastAnswer = value.time;
+                    }
+                  }
+                }
+                let endObject = {};
+                for (const [key, value] of Object.entries(
+                  JSON.parse(localStorage.getItem("userAnswers"))
+                )) {
+                  endObject[key] = value;
+                }
+                let remainingTime =
+                  props.examInfo.mcqTotalTime -
+                  (props.examInfo.mcqTotalTime - timeForLastAnswer);
+                endObject.remainingTime = remainingTime;
+                localStorage.setItem("userAnswers", JSON.stringify(endObject));
+              }
               props.closeExamStepsTotally(true, true);
             }}
+            disabled={
+              JSON.parse(localStorage.getItem("userAnswers")) &&
+              JSON.parse(localStorage.getItem("userAnswers")).isFinished
+            }
             variant="contained"
-            style={styles.examActionButton}
+            style={
+              JSON.parse(localStorage.getItem("userAnswers")) &&
+              JSON.parse(localStorage.getItem("userAnswers")).isFinished ===
+                true
+                ? {
+                    fontSize: 15,
+                    height: 40,
+                    color: "#2B2E39",
+                    backgroundColor: "#E3E4E5",
+                  }
+                : styles.examActionButton
+            }
           >
-            Begin
+            {JSON.parse(localStorage.getItem("userAnswers")) &&
+            JSON.parse(localStorage.getItem("userAnswers")).isFinished === true
+              ? "Completed"
+              : "Begin"}
           </Button>
         </Box>
         <Box component="span" m={1} style={styles.bigBox}>

@@ -17,11 +17,7 @@ import { styled } from "@mui/material/styles";
 import ExamComponent from "./ExamComponent";
 import SecondStep from "./SecondStep";
 import ThirdStep from "./ThirdStep";
-import {
-  Battery30,
-  Battery60,
-  BatteryFull,
-} from "@mui/icons-material";
+import { Battery30, Battery60, BatteryFull } from "@mui/icons-material";
 
 const steps = [
   {
@@ -47,7 +43,7 @@ const ExamStepHandlingComponent = (props) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  
+
   return (
     <Box sx={styles.bigBox}>
       <Grid container spacing={2}>
@@ -120,10 +116,7 @@ const ExamStepHandlingComponent = (props) => {
                               />
                             ))}
                           </Box>
-                          <Box
-                            component="form"
-                            noValidate
-                          >
+                          <Box component="form" noValidate>
                             {["1", "2", "3", "4"].map(() => (
                               <TextField
                                 margin="normal"

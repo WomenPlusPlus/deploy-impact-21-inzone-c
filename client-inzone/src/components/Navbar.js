@@ -7,6 +7,7 @@ import {
   Chat,
   Notifications,
   Assignment,
+  Groups,
 } from "@mui/icons-material";
 import { withRouter, useHistory } from "react-router-dom";
 import ThemeSwitch from "./ThemeSwitch";
@@ -21,7 +22,7 @@ function Navbar() {
   }, []);
 
   return (
-    <Box sx={{ pb: 7, display: 'flex' }}>
+    <Box sx={{ pb: 7, display: "flex" }}>
       {/* app bar */}
       <AppBar style={styles.navbar} position="static">
         <Toolbar>
@@ -100,15 +101,39 @@ function Navbar() {
               JSON.parse(localStorage.getItem("userInformation")).role ===
               "student"
                 ? history.push("/student/exams")
-                : history.push("/coordinator/exams")
+                : history.push("/coordinator/students")
             }
           >
-            <Assignment />
             {JSON.parse(localStorage.getItem("userInformation")).role ===
-              "student"
-                ? "Exams"
-                : "Students"}
+            "student" ? (
+              <Assignment />
+            ) : (
+              <Groups />
+            )}
+            {JSON.parse(localStorage.getItem("userInformation")).role ===
+            "student"
+              ? "Exams"
+              : "Students"}
           </IconButton>
+          {JSON.parse(localStorage.getItem("userInformation")).role ===
+          "student" ? null : (
+            <IconButton
+              style={styles.navIcon}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() =>
+                JSON.parse(localStorage.getItem("userInformation")).role ===
+                "student"
+                  ? history.push("/student/exams")
+                  : history.push("/coordinator/exams")
+              }
+            >
+              <Assignment />
+              Exams
+            </IconButton>
+          )}
           <IconButton
             style={styles.navIcon}
             size="large"
@@ -150,21 +175,21 @@ const styles = {
   },
   navIcon: {
     marginRight: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
     fontSize: 12,
-    margin: 10
+    margin: 10,
   },
   logOutIcon: {
     marginRight: 200,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
     fontSize: 12,
-    margin: 10
+    margin: 10,
   },
   title: {
     marginLeft: 200,

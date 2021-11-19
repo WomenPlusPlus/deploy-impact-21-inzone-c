@@ -56,7 +56,11 @@ const ExamsPage = () => {
       mcq: {},
     };
     fetch(
-      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+        exam.objectId
+      }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).objectId
+      }"}}]}`,
       {
         method: "GET",
         headers: {
@@ -66,14 +70,78 @@ const ExamsPage = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        let questions = [];
-        json.results.map((question) => questions.push(question));
-        examObject.mcq = questions;
-      })
-      .then(() => {
-        // TODO: We need to encrypt the data here.
-        localStorage.setItem("exam", JSON.stringify(examObject));
-        setExamInfo(examObject);
+        if (json.results.length === 0) {
+          let _data = {
+            examId: {
+              __type: "Pointer",
+              className: "Exam",
+              objectId: exam.objectId,
+            },
+            userId: {
+              __type: "Pointer",
+              className: "_User",
+              objectId: JSON.parse(localStorage.getItem("userInformation"))
+                .objectId,
+            },
+          };
+          fetch(
+            `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam/`,
+            {
+              method: "POST",
+              body: JSON.stringify(_data),
+              headers: {
+                "X-Parse-Application-Id": "inzonec",
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              fetch(
+                `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+                {
+                  method: "GET",
+                  headers: {
+                    "X-Parse-Application-Id": "inzonec",
+                  },
+                }
+              )
+                .then((response) => response.json())
+                .then((json) => {
+                  let questions = [];
+                  json.results.map((question) => questions.push(question));
+                  examObject.mcq = questions;
+                })
+                .then(() => {
+                  // TODO: We need to encrypt the data here.
+                  localStorage.setItem("exam", JSON.stringify(examObject));
+                  setExamInfo(examObject);
+                })
+                .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log("err: ", err.message));
+        } else {
+          fetch(
+            `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+            {
+              method: "GET",
+              headers: {
+                "X-Parse-Application-Id": "inzonec",
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              let questions = [];
+              json.results.map((question) => questions.push(question));
+              examObject.mcq = questions;
+            })
+            .then(() => {
+              // TODO: We need to encrypt the data here.
+              localStorage.setItem("exam", JSON.stringify(examObject));
+              setExamInfo(examObject);
+            })
+            .catch((err) => console.log(err));
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -82,46 +150,7 @@ const ExamsPage = () => {
     loadExams();
   }, []);
 
-  // const infoExam = (index, exam) => {
-  //   return (
-  //     <>
-  //       <IconButton aria-label="next" onClick={handleClickInfoButton}>
-  //         <Info sx={{ height: 38, width: 38 }} />
-  //       </IconButton>
-  //       <Popover
-  //         id={index}
-  //         open={Boolean(anchorElInfoButton)}
-  //         anchorEl={anchorElInfoButton}
-  //         onClose={handleCloseInfoButton}
-  //         anchorOrigin={{
-  //           vertical: "bottom",
-  //           horizontal: "left",
-  //         }}
-  //       >
-  //         <Typography sx={{ p: 2 }}>
-  //           Created By: {exam.createdBy.name}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Live Section End Date: {exam.firstSectionEndDate.iso}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Question Section End Date: {exam.secondSectionEndDate.iso}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Capstone Project Feedback Section End Date:{" "}
-  //           {exam.thirdSectionEndDate.iso}
-  //         </Typography>
-  //       </Popover>
-  //     </>
-  //   );
-  // };
-
   const handleOpenFeedbackModal = (exam) => {
-    console.log("exam: ", exam.objectId);
-    console.log(
-      "userID: ",
-      JSON.parse(localStorage.getItem("userInformation")).objectId
-    );
     fetch(
       `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
         exam.objectId
@@ -137,11 +166,16 @@ const ExamsPage = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        setUserExamInfo(json.results[0]);
+        if (json.results.length === 0) {
+          alert("You have not taken this exam yet.");
+        } else {
+          setUserExamInfo(json.results[0]);
+          setOpenFeedbackModal(true);
+        }
       })
-      .then(() => setOpenFeedbackModal(true))
       .catch((err) => console.log(err));
   };
+
   const handleCloseFeedbackModal = () => {
     setOpenFeedbackModal(false);
   };
@@ -156,7 +190,7 @@ const ExamsPage = () => {
         <CssBaseline />
         <Grid style={examInfo && { display: "none" }}>
           <Grid container spacing={0} justifyContent="center">
-            <Item style={{ paddingLeft: 80, paddingRight: 80 }}>
+            <Item style={{ paddingLeft: 80, paddingRight: 80, width: "130vh" }}>
               {loading === true && <LinearProgress />}
               <div
                 style={{

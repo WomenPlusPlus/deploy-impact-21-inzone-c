@@ -23,9 +23,9 @@ const ResultFeedbackModal = (props) => {
             label="Your Feedback"
             multiline
             disabled
-            rows={4}
+            rows={5}
             style={{ marginRight: 20 }}
-            defaultValue="MCQ section was very hard. Live question section was very funny."
+            defaultValue={userExamInfo.capstoneProjectTextFeedback}
           />
           <TextField
             id="outlined-multiline-static"

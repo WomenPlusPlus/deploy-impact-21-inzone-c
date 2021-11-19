@@ -1,7 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
 const ExamComponent = (props) => {
+  const [mcqIsDone, setMCQIsDone] = useState(false);
+  const [capstoneProjectIsDone, setCapstoneProjectIsDone] = useState(false);
+  const mcqSectionDone = () => {
+    fetch(
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+        props.examInfo.examId
+      }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).objectId
+      }"}}]}`,
+      {
+        method: "GET",
+        headers: {
+          "X-Parse-Application-Id": "inzonec",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.results[0].capstoneProjectFeedback !== undefined) {
+          setCapstoneProjectIsDone(true);
+        }else{
+          setCapstoneProjectIsDone(false);
+        }
+        if (
+          json.results[0].secondSection !== undefined &&
+          json.results[0].secondSection !== null
+        ) {
+          setMCQIsDone(true);
+        } else {
+          fetch(
+            `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserMCQAnswer?where={"userId":{"__type":"Pointer","className":"_User","objectId":"${
+              JSON.parse(localStorage.getItem("userInformation")).objectId
+            }"}}`,
+            {
+              method: "GET",
+              headers: {
+                "X-Parse-Application-Id": "inzonec",
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((json2) => {
+              let objectForUserAnswers = {
+                isFinished: false,
+                remainingTime: props.examInfo.mcqTotalTime,
+              };
+              json2.results.map((question, index) => {
+                objectForUserAnswers["question" + index] = {};
+                objectForUserAnswers["question" + index].id =
+                  question.questionId.objectId;
+                objectForUserAnswers["question" + index].time =
+                  index === 0
+                    ? props.examInfo.mcqTotalTime -
+                      question.howManySecondsPassed
+                    : objectForUserAnswers["question" + (index - 1)].time -
+                      question.howManySecondsPassed;
+                objectForUserAnswers["question" + index].answer =
+                  question.answer;
+              });
+              localStorage.setItem(
+                "userAnswers",
+                JSON.stringify(objectForUserAnswers)
+              );
+              return false;
+            })
+            .catch((err) => console.log(err));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    mcqSectionDone();
+  }, []);
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -43,6 +116,8 @@ const ExamComponent = (props) => {
                     if (value.time < timeForLastAnswer) {
                       timeForLastAnswer = value.time;
                     }
+                  } else {
+                    timeForLastAnswer = props.examInfo.mcqTotalTime;
                   }
                 }
                 let endObject = {};
@@ -51,73 +126,42 @@ const ExamComponent = (props) => {
                 )) {
                   endObject[key] = value;
                 }
-                let remainingTime =
-                  props.examInfo.mcqTotalTime -
-                  (props.examInfo.mcqTotalTime - timeForLastAnswer);
-                endObject.remainingTime = remainingTime;
+                endObject.remainingTime = timeForLastAnswer;
                 localStorage.setItem("userAnswers", JSON.stringify(endObject));
               }
               props.closeExamStepsTotally(true, true);
             }}
-            disabled={
-              JSON.parse(localStorage.getItem("userAnswers")) &&
-              JSON.parse(localStorage.getItem("userAnswers")).isFinished
-            }
+            disabled={mcqIsDone}
             variant="contained"
             style={
-              JSON.parse(localStorage.getItem("userAnswers")) &&
-              JSON.parse(localStorage.getItem("userAnswers")).isFinished ===
-                true
-                ? {
-                    fontSize: 15,
-                    height: 40,
-                    color: "#2B2E39",
-                    backgroundColor: "#E3E4E5",
-                  }
+              mcqIsDone === true
+                ? styles.examCompletedActionButton
                 : styles.examActionButton
             }
           >
-            {JSON.parse(localStorage.getItem("userAnswers")) &&
-            JSON.parse(localStorage.getItem("userAnswers")).isFinished === true
-              ? "Completed"
-              : "Begin"}
+            {mcqIsDone === true ? "Completed" : "Begin"}
           </Button>
         </Box>
         <Box component="span" m={1} style={styles.bigBox}>
           <Typography sx={styles.examPartLabel}>
             Capstone Project Feedback
           </Typography>
+
           <Button
             variant="contained"
-            style={styles.examActionButton}
+            style={
+              capstoneProjectIsDone && capstoneProjectIsDone === true
+                ? styles.examCompletedActionButton
+                : styles.examActionButton
+            }
             onClick={() => {
               props.closeExamStepsTotally(true, false);
             }}
-            disabled={() => {
-              fetch(
-                `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
-                  props.examInfo.examId
-                }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
-                  JSON.parse(localStorage.getItem("userInformation")).objectId
-                }"}}]}`,
-                {
-                  method: "GET",
-                  headers: {
-                    "X-Parse-Application-Id": "inzonec",
-                  },
-                }
-              )
-                .then((response) => response.json())
-                .then((json) => {
-                  if(json.results[0].capstoneProjectFeedback !== undefined || json.results[0].capstoneProjectFeedback !== null){
-                    return true;
-                  }
-                  return false;
-                })
-                .catch((err) => console.log(err));
-            }}
+            disabled={capstoneProjectIsDone && capstoneProjectIsDone === true}
           >
-            Begin
+            {capstoneProjectIsDone && capstoneProjectIsDone === true
+              ? "Completed"
+              : "Begin"}
           </Button>
         </Box>
       </Box>
@@ -143,6 +187,12 @@ const styles = {
     height: 40,
     color: "#2B2E39",
     backgroundColor: "#F8BE48",
+  },
+  examCompletedActionButton: {
+    fontSize: 15,
+    height: 40,
+    color: "#2B2E39",
+    backgroundColor: "#E2E3E4",
   },
 };
 export default ExamComponent;

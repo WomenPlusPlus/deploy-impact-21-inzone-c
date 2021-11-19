@@ -154,25 +154,15 @@ const SecondStep = (props) => {
     )) {
       endObject[key] = value;
     }
+    endObject.isFinished = true;
     let theObjectIdOfQuestion = props.examInfo.mcq[questionNo].objectId;
     endObject["question" + questionNo] = {};
     endObject["question" + questionNo].id = theObjectIdOfQuestion;
     endObject["question" + questionNo].answer = answer;
     endObject["question" + questionNo].time = seconds;
     localStorage.setItem("userAnswers", JSON.stringify(endObject));
-    for (const [key, value] of Object.entries(
-      JSON.parse(localStorage.getItem("userAnswers"))
-    )) {
-      if (key === "isFinished") {
-        endObject.isFinished = true;
-      } else {
-        endObject[key] = value;
-      }
-    }
     for (const [key, value] of Object.entries(endObject)) {
       if (key !== "isFinished" || key !== "remainingTime") {
-        console.log("key: ", key);
-        console.log("endObject[key].id: ", endObject[key].id);
         fetch(
           `https:inzone-c-parse.tools.deployimpact.ch/parse/classes/UserMCQAnswer?where={"$and":[{"questionId":{"__type":"Pointer","className":"MultipleChoiceQuestion","objectId":"${
             endObject[key].id
@@ -222,7 +212,67 @@ const SecondStep = (props) => {
                 }
               )
                 .then((response) => response.json())
-                .then((json) => {})
+                .then((json) => {
+                  fetch(
+                    `https:inzone-c-parse.tools.deployimpact.ch/parse/classes/UserMCQAnswer?where={"userId":{"__type":"Pointer","className":"_User","objectId":"${
+                      JSON.parse(localStorage.getItem("userInformation")).objectId
+                    }"}}`,
+                    {
+                      method: "GET",
+                      headers: {
+                        "X-Parse-Application-Id": "inzonec",
+                      },
+                    }
+                  )
+                    .then((response) => response.json())
+                    .then((json) => {
+                      let totalTime = 0;
+                      let totalPoint = 0;
+                      let questionPoint = 100 / JSON.parse(localStorage.getItem("exam")).mcq.length;
+                      json.results.map((userAnswer) => {
+                        if(JSON.parse(localStorage.getItem("exam")).mcq.find((item) => item.objectId === userAnswer.questionId.objectId).trueAnswer === userAnswer.answer){
+                          totalPoint += questionPoint;
+                        }
+                        totalTime += userAnswer.howManySecondsPassed;
+                      })
+
+                      fetch(
+                        `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+                          props.examInfo.examId
+                        }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+                          JSON.parse(localStorage.getItem("userInformation")).objectId
+                        }"}}]}`,
+                        {
+                          method: "GET",
+                          headers: {
+                            "X-Parse-Application-Id": "inzonec",
+                          },
+                        }
+                      )
+                        .then((response) => response.json())
+                        .then((json) => {
+                          let _data = {
+                            secondSection: totalPoint,
+                            totalTimeToFinishSecondSection: totalTime
+                          }
+                          fetch(
+                            `https:inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam/${json.results[0].objectId}`,
+                            {
+                              method: "PUT",
+                              body: JSON.stringify(_data),
+                              headers: {
+                                "X-Parse-Application-Id": "inzonec",
+                              },
+                            }
+                          )
+                            .then((response) => response.json())
+                            .then((json) => {})
+                            .catch(err => console.log(err))
+                        })
+                        .catch(err => console.log(err))
+                    }).catch(err => console.log(err))
+
+                })
                 .catch((err) => {
                   if (
                     err.message === "Failed to fetch" &&
@@ -246,7 +296,6 @@ const SecondStep = (props) => {
           });
       }
     }
-    localStorage.setItem("userAnswers", JSON.stringify(endObject));
     props.finishExam(true);
   };
   const finishExam = () => {

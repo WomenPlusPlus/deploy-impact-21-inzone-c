@@ -1,40 +1,32 @@
-import { ThemeProvider } from '@material-ui/styles';
-import React, { useContext } from 'react'
+import * as React from "react";
+import { ThemeProvider, useTheme, createTheme } from "@mui/material/styles";
 import createRoutes from "./components/Routes";
-import { theme } from "./themes/themes";
-import { ThemeContext } from "./themes/Provider";
-import "./index.css";
+import { darkTheme } from "./themes/dark";
 
-const getStyles = (mode) => ({
-  header: {
-    fontSize: 34,
-    fontWeight: "400"
-  },
-  app: {
-    height: "100%",
-    width: "100%",
-    padding: 16,
-    backgroundColor: theme[mode].backgroundColor
-  },
-  text: {
-    fontWeight: "200",
-    color: theme[mode].color
-  },
-  theme: {
-    color: theme[mode].highlight
-  }
-});
+const darkModeTheme = createTheme(darkTheme);
+
 function App() {
-
-  const { mode } = useContext(ThemeContext);
-  const styles = getStyles(mode);
-
+  const styles = {
+    div: {
+      backgroundColor: "#20222B",
+    },
+  };
+  useTheme();
   return (
-    <div className="App" style={styles.app}>
-      {createRoutes()}
-    </div>
-
+    <ThemeProvider theme={darkModeTheme}>
+      <div className="App" style={styles.div}>
+        {createRoutes()}
+      </div>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+// export default function DarkThemeWithCustomPalette() {
+//   return (
+
+//       <MyApp />
+
+//   );
+// }

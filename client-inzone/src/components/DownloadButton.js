@@ -51,7 +51,7 @@ const DownloadButton = () => {
       <Button
         variant="contained"
         color="primary"
-        style={{ marginTop: 20 }}
+        style={{ marginTop: 20, backgroundColor: '#2B2E39', border: "2px solid #E3E4E5", }}
         onClick={download}
       >
         Download exam template

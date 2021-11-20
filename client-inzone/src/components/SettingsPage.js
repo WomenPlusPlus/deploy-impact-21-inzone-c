@@ -11,14 +11,18 @@ import {
   FormControl,
   Select,
   InputLabel,
-  MenuItem
+  MenuItem,
+  CssBaseline
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const SettingsPage = () => {
   return (
     <div>
-      <Grid container spacing={2}>
+      <CssBaseline />
+      <Grid sx={{
+          height: '90vh'
+        }} container spacing={2}>
         <Grid item xs={12}>
           <Item>
             <Box
@@ -32,7 +36,6 @@ const SettingsPage = () => {
                 fullWidth
                 id="username"
                 onChange={(input) => {
-                  console.log(input);
                 }}
                 label="Username"
                 name="username"

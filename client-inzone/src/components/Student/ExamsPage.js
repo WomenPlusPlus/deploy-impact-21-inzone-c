@@ -1,48 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
-  Typography,
+  Divider,
   Box,
   Paper,
   Grid,
   LinearProgress,
-  Card,
-  IconButton,
-  CardContent,
-  FormControl,
-  Input,
-  InputAdornment,
-  Modal,
-  TextField,
-  Divider,
-  Button,
+  Typography,
+  CssBaseline,
 } from "@mui/material";
-import {
-  Download,
-  Search,
-  FormatListBulleted,
-  Apps,
-  ViewWeek,
-  Create,
-  PlaylistAddCheck,
-} from "@mui/icons-material";
 import ExamStepHandlingComponent from "./Exams/ExamStepHandlingComponent";
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import ResultFeedbackModal from "./ResultFeedbackModal";
+import ExamDiv from "./ExamDiv";
+
 const ExamsPage = () => {
   const [loading, setLoading] = useState(true);
   const [exams, setExams] = useState();
   const [examInfo, setExamInfo] = useState();
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const [userExamInfo, setUserExamInfo] = useState([]);
 
   const loadExams = () => {
     // refugeeCampId of User => JSON.parse(localStorage.getItem("userInformation")).refugeeCampId.objectId
     fetch(
-      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/Exam?where={"$or":[{"examLocation":{"__type":"Pointer","className":"RefugeeCamp","objectId":"${JSON.parse(localStorage.getItem("userInformation")).refugeeCampId
-        .objectId
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/Exam?where={"$or":[{"examLocation":{"__type":"Pointer","className":"RefugeeCamp","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).refugeeCampId
+          .objectId
       }"}},{"examLocation":null}]}&include=examLocation&include=createdBy`,
       {
         method: "GET",
@@ -69,10 +52,15 @@ const ExamsPage = () => {
       secondSectionEndDate: exam.secondSectionEndDate.iso,
       thirdSectionEndDate: exam.thirdSectionEndDate.iso,
       firstSectionLink: exam.firstSectionLink,
+      mcqTotalTime: exam.mcqTotalTime,
       mcq: {},
     };
     fetch(
-      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+        exam.objectId
+      }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).objectId
+      }"}}]}`,
       {
         method: "GET",
         headers: {
@@ -82,14 +70,78 @@ const ExamsPage = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        let questions = [];
-        json.results.map((question) => questions.push(question));
-        examObject.mcq = questions;
-      })
-      .then(() => {
-        // TODO: We will get user's answer here!
-        console.log(examObject);
-        setExamInfo(examObject);
+        if (json.results.length === 0) {
+          let _data = {
+            examId: {
+              __type: "Pointer",
+              className: "Exam",
+              objectId: exam.objectId,
+            },
+            userId: {
+              __type: "Pointer",
+              className: "_User",
+              objectId: JSON.parse(localStorage.getItem("userInformation"))
+                .objectId,
+            },
+          };
+          fetch(
+            `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam/`,
+            {
+              method: "POST",
+              body: JSON.stringify(_data),
+              headers: {
+                "X-Parse-Application-Id": "inzonec",
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              fetch(
+                `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+                {
+                  method: "GET",
+                  headers: {
+                    "X-Parse-Application-Id": "inzonec",
+                  },
+                }
+              )
+                .then((response) => response.json())
+                .then((json) => {
+                  let questions = [];
+                  json.results.map((question) => questions.push(question));
+                  examObject.mcq = questions;
+                })
+                .then(() => {
+                  // TODO: We need to encrypt the data here.
+                  localStorage.setItem("exam", JSON.stringify(examObject));
+                  setExamInfo(examObject);
+                })
+                .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log("err: ", err.message));
+        } else {
+          fetch(
+            `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion?where={"examId":{"__type":"Pointer","className":"Exam","objectId":"${exam.objectId}"}}`,
+            {
+              method: "GET",
+              headers: {
+                "X-Parse-Application-Id": "inzonec",
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              let questions = [];
+              json.results.map((question) => questions.push(question));
+              examObject.mcq = questions;
+            })
+            .then(() => {
+              // TODO: We need to encrypt the data here.
+              localStorage.setItem("exam", JSON.stringify(examObject));
+              setExamInfo(examObject);
+            })
+            .catch((err) => console.log(err));
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -98,202 +150,112 @@ const ExamsPage = () => {
     loadExams();
   }, []);
 
-  // const infoExam = (index, exam) => {
-  //   return (
-  //     <>
-  //       <IconButton aria-label="next" onClick={handleClickInfoButton}>
-  //         <Info sx={{ height: 38, width: 38 }} />
-  //       </IconButton>
-  //       <Popover
-  //         id={index}
-  //         open={Boolean(anchorElInfoButton)}
-  //         anchorEl={anchorElInfoButton}
-  //         onClose={handleCloseInfoButton}
-  //         anchorOrigin={{
-  //           vertical: "bottom",
-  //           horizontal: "left",
-  //         }}
-  //       >
-  //         <Typography sx={{ p: 2 }}>
-  //           Created By: {exam.createdBy.name}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Live Section End Date: {exam.firstSectionEndDate.iso}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Question Section End Date: {exam.secondSectionEndDate.iso}
-  //         </Typography>
-  //         <Typography sx={{ p: 2 }}>
-  //           Capstone Project Feedback Section End Date:{" "}
-  //           {exam.thirdSectionEndDate.iso}
-  //         </Typography>
-  //       </Popover>
-  //     </>
-  //   );
-  // };
-
-  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
-  const handleOpenFeedbackModal = () => {
-    setOpenFeedbackModal(true);
+  const handleOpenFeedbackModal = (exam) => {
+    fetch(
+      `https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam?where={"$and":[{"examId":{"__type":"Pointer","className":"Exam","objectId":"${
+        exam.objectId
+      }"}}, {"userId":{"__type":"Pointer","className":"_User","objectId":"${
+        JSON.parse(localStorage.getItem("userInformation")).objectId
+      }"}}]}`,
+      {
+        method: "GET",
+        headers: {
+          "X-Parse-Application-Id": "inzonec",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.results.length === 0) {
+          alert("You have not taken this exam yet.");
+        } else {
+          setUserExamInfo(json.results[0]);
+          setOpenFeedbackModal(true);
+        }
+      })
+      .catch((err) => console.log(err));
   };
+
   const handleCloseFeedbackModal = () => {
     setOpenFeedbackModal(false);
   };
 
   return (
     <>
-      <Grid container spacing={2} style={examInfo && { display: "none" }}>
-        <Grid item xs={3} style={styles.dashboard}>
-          <Item style={{ marginLeft: 40, marginRight: 40}}>
-            <FormControl variant="standard">
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <Typography style={{ marginTop: 20 }}>
-              <FormatListBulleted />
-              <Apps />
-              <ViewWeek />
-            </Typography>
-            <Typography style={{ marginTop: 20, marginBottom:450 }}>
-              You have {exams && exams.length} exams in your dashboard.
-            </Typography>
-          </Item>
+      <Box
+        sx={{
+          height: "100vh",
+        }}
+      >
+        <CssBaseline />
+        <Grid style={examInfo && { display: "none" }}>
+          <Grid container spacing={0} justifyContent="center">
+            <Item style={{ paddingLeft: 80, paddingRight: 80, width: "130vh" }}>
+              {loading === true && <LinearProgress />}
+              <div
+                style={{
+                  justifyContent: "space-between",
+                  display: "flex",
+                  marginBottom: 10,
+                }}
+              >
+                <Typography sx={styles.headerTitle}>Exams</Typography>
+                <Typography sx={styles.headerInfo}>
+                  You have {exams && exams.length} exams in your dashboard.
+                </Typography>
+              </div>
+              <Divider style={{ marginBottom: 30 }} />
+              <Grid container item spacing={5}>
+                {exams &&
+                  exams.map((exam, index) => (
+                    <ExamDiv
+                      index={index}
+                      examName={exam.name}
+                      firstSectionStartDate={exam.firstSectionStartDate.iso}
+                      loadExam={(loadTime) => loadTime && loadExam(exam)}
+                      handleOpenFeedbackModal={(modalTime) =>
+                        modalTime && handleOpenFeedbackModal(exam)
+                      }
+                    />
+                  ))}
+              </Grid>
+            </Item>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <Item>
-            {loading === true && <LinearProgress />}
-            <Grid container item spacing={5
-            }>
-              {exams &&
-                exams.map((exam, index) => (
-                  <Grid item xs={6} key={index}>
-                    <Card  style={{paddingBottom: 50}}>
-              
-                        <CardContent style={{ marginTop: 10}} >
-                          <Typography component="div" variant="h5">
-                            {exam.name}
-                          </Typography>
-                          <Typography
-                            variant="subtitle1"
-                            color="text.secondary"
-                            component="div"
-                          >
-                            You will start at{" "}
-                            {new Date(
-                              exam.firstSectionStartDate.iso
-                            ).toDateString()}
-                          </Typography>
-                        </CardContent>
-                 
-                          <IconButton
-                            onClick={() => alert(JSON.stringify(exam))}
-                            style={styles.iconText}>
-                            <Download
-                              sx={{ height: 45, width: 30, color: "blue" }}
-                            />
-                            Download
-                          </IconButton>
-                          
-                          <IconButton 
-                          onClick={() => loadExam(exam)}
-                          style={styles.iconText}>
-                            <Create sx={{ height: 38, width: 25, color: "blue"}} />
-                            Begin Exam
-                          </IconButton>
-                          <IconButton
-                            aria-label="next"
-                            onClick={handleOpenFeedbackModal}
-                            style={styles.iconText}
-                          >
-                            <PlaylistAddCheck sx={{ height: 38, width: 38, color: "blue" }} />
-                            Feedback
-                          </IconButton>
-                          <Modal
-                            open={openFeedbackModal}
-                            onClose={handleCloseFeedbackModal}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                          >
-                            <Box sx={styleOfModal}>
-                              <Typography id="modal-modal-title" variant="h6">
-                                Here is your feedback and coordinator's feedback
-                                for you.
-                              </Typography>
-                              <TextField
-                                id="outlined-multiline-static"
-                                label="Your Feedback"
-                                multiline
-                                disabled
-                                rows={4}
-                                style={{ marginTop: 20 }}
-                                defaultValue="MCQ section was very hard. Live question section was very funny."
-                              />
-                              <Divider style={{ marginTop: 20 }} />
-                              <TextField
-                                id="outlined-multiline-static"
-                                label="Coordinator's Feedback"
-                                multiline
-                                disabled
-                                rows={4}
-                                style={{ marginTop: 20 }}
-                                defaultValue="I am glad you like it. We tried to ask hard but you finished it successfully."
-                              />
-                              <Divider
-                                style={{ marginTop: 20, marginBottom: 20 }}
-                              />
-                              <Button
-                                variant="contained"
-                                color="success"
-                                style={{ height: 40 }}
-                                onClick={() => {
-                                  handleCloseFeedbackModal();
-                                }}
-                              >
-                                Close
-                              </Button>
-                            </Box>
-                          </Modal>
-                    </Card>
-                  </Grid>
-                ))}
-            </Grid>
-          </Item>
-        </Grid>
-      </Grid>
-      {examInfo && (
-        <ExamStepHandlingComponent
-          examInfo={examInfo}
-          finishExam={(finishExam) => finishExam && setExamInfo(undefined)}
+        {examInfo && (
+          <ExamStepHandlingComponent
+            examInfo={examInfo}
+            finishExam={(finishExam) => finishExam && setExamInfo(undefined)}
+          />
+        )}
+      </Box>
+      {userExamInfo && (
+        <ResultFeedbackModal
+          modalIsOpen={openFeedbackModal}
+          userExamInfo={userExamInfo}
+          closeModal={(closeTime) => closeTime && handleCloseFeedbackModal()}
         />
       )}
     </>
   );
 };
-const styleOfModal = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 200,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+  backgroundColor: "#2B2E39",
+}));
 const styles = {
-  iconText:{
-    fontSize:15,
+  headerTitle: {
+    float: "left",
+    fontSize: 25,
+    color: "#E3E4E5",
   },
-  dashboard:{
-    height:200,
-    paddingBottom:100,
+  headerInfo: {
+    float: "right",
+    fontSize: 10,
+    marginTop: 3,
   },
-}
+};
 export default ExamsPage;

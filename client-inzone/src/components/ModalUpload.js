@@ -5,40 +5,28 @@ import DownloadButton from "./DownloadButton";
 
 const ModalUpload = (props) => {
   const { modalIsOpen, closeModal } = props;
-  console.log(props);
 
   return (
-    <Modal
-      open={modalIsOpen}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      onClose={() => closeModal(true)}
-    >
-      <Box sx={styleOfModal}>
-        <Typography id="modal-modal-title" variant="h6">
-          Upload your csv file
+    <Modal open={modalIsOpen} onClose={() => closeModal(true)}>
+      <Box sx={styles.styleOfModal}>
+        <Typography style={styles.modalTitle}>
+          Upload the *.csv file here
         </Typography>
-        <label htmlFor="contained-button-file">
-          <UploadInput
-            accept=".csv"
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <Button variant="contained" component="span">
-            Upload
-          </Button>
-        </label>
+        <UploadInput
+          accept=".csv"
+          id="contained-button-file"
+          multiple
+          type="file"
+        />
+        <Button style={styles.uploadButton}>Upload File</Button>
         <DownloadButton />
-
-        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
         <Button
           variant="contained"
           color="success"
-          style={{ height: 40 }}
-          onClick={props.setModalIsOpenToFalse}
+          style={styles.nextButton}
+          onClick={() => closeModal(true)}
         >
-          Submit
+          Next
         </Button>
       </Box>
     </Modal>
@@ -49,16 +37,37 @@ const UploadInput = styled("input")({
   display: "none",
 });
 
-const styleOfModal = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+const styles = {
+  styleOfModal: {
+    textAlign: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    backgroundColor: "#2B2E39",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  },
+  modalTitle: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#E3E4E5",
+  },
+  nextButton: {
+    marginTop: 80,
+    height: 30,
+    float: "right",
+    backgroundColor: "#F8BE48",
+    color: "#2B2E39",
+  },
+  uploadButton: {
+    backgroundColor: "#F8BE48",
+    color: "#2B2E39",
+    marginTop: 15,
+  },
 };
 
 export default ModalUpload;

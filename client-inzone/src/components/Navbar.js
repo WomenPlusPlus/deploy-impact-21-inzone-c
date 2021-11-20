@@ -1,12 +1,5 @@
-import React, {useContext, useEffect} from "react";
-
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import {
   Home,
   Settings,
@@ -14,39 +7,22 @@ import {
   Chat,
   Notifications,
   Assignment,
+  Groups,
 } from "@mui/icons-material";
 import { withRouter, useHistory } from "react-router-dom";
 import ThemeSwitch from "./ThemeSwitch";
 
-
-
 function Navbar() {
   const history = useHistory();
-
-  const styles = {
-    navbar: {
-      //  backgroundColor:"black"
-    },
-    navIcon: {
-      marginRight: 40,
-    },
-    logOutIcon: {
-      marginRight: 200,
-    },
-    title: {
-      marginLeft: 200,
-      fontWeight: 700,
-    }
-  }
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("userInformation"))) {
       history.push("/login");
-      window.location.reload(false)
+      window.location.reload(false);
     }
   }, []);
 
   return (
-    <Box sx={{ pb: 7 }}>
+    <Box sx={{ pb: 7, display: "flex" }}>
       {/* app bar */}
       <AppBar style={styles.navbar} position="static">
         <Toolbar>
@@ -63,10 +39,10 @@ function Navbar() {
           >
             Examify
           </Typography>
-          <IconButton
+          {/* <IconButton
             style={styles.navIcon}>
             <ThemeSwitch />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             style={styles.navIcon}
             size="large"
@@ -75,12 +51,13 @@ function Navbar() {
             aria-label="open drawer"
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
-                "student"
+              "student"
                 ? history.push("/student")
                 : history.push("/coordinator")
             }
           >
             <Home />
+            Home
           </IconButton>
           <IconButton
             style={styles.navIcon}
@@ -90,27 +67,13 @@ function Navbar() {
             aria-label="open drawer"
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
-                "student"
-                ? history.push("/student/chat")
-                : history.push("/coordinator/chat")
-            }
-          >
-            <Chat />
-          </IconButton>
-          <IconButton
-            style={styles.navIcon}
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() =>
-              JSON.parse(localStorage.getItem("userInformation")).role ===
-                "student"
+              "student"
                 ? history.push("/student/notifications")
                 : history.push("/coordinator/notifications")
             }
           >
             <Notifications />
+            Notifications
           </IconButton>
           <IconButton
             style={styles.navIcon}
@@ -120,12 +83,13 @@ function Navbar() {
             aria-label="open drawer"
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
-                "student"
-                ? history.push("/student/exams")
-                : history.push("/coordinator/exams")
+              "student"
+                ? history.push("/student/chat")
+                : history.push("/coordinator/chat")
             }
           >
-            <Assignment />
+            <Chat />
+            Chat
           </IconButton>
           <IconButton
             style={styles.navIcon}
@@ -135,12 +99,56 @@ function Navbar() {
             aria-label="open drawer"
             onClick={() =>
               JSON.parse(localStorage.getItem("userInformation")).role ===
+              "student"
+                ? history.push("/student/exams")
+                : history.push("/coordinator/students")
+            }
+          >
+            {JSON.parse(localStorage.getItem("userInformation")).role ===
+            "student" ? (
+              <Assignment />
+            ) : (
+              <Groups />
+            )}
+            {JSON.parse(localStorage.getItem("userInformation")).role ===
+            "student"
+              ? "Exams"
+              : "Students"}
+          </IconButton>
+          {JSON.parse(localStorage.getItem("userInformation")).role ===
+          "student" ? null : (
+            <IconButton
+              style={styles.navIcon}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() =>
+                JSON.parse(localStorage.getItem("userInformation")).role ===
                 "student"
+                  ? history.push("/student/exams")
+                  : history.push("/coordinator/exams")
+              }
+            >
+              <Assignment />
+              Exams
+            </IconButton>
+          )}
+          <IconButton
+            style={styles.navIcon}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() =>
+              JSON.parse(localStorage.getItem("userInformation")).role ===
+              "student"
                 ? history.push("/student/settings")
                 : history.push("/coordinator/settings")
             }
           >
             <Settings />
+            Settings
           </IconButton>
           <IconButton
             style={styles.logOutIcon}
@@ -150,17 +158,42 @@ function Navbar() {
             onClick={() => {
               localStorage.removeItem("userInformation");
               history.push("/login");
-              window.location.reload(false)
+              window.location.reload(false);
             }}
           >
             <Logout />
+            Logout
           </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
   );
-
 }
-
+const styles = {
+  navbar: {
+    backgroundColor: "#2B2E39",
+  },
+  navIcon: {
+    marginRight: 40,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    fontSize: 12,
+    margin: 10,
+  },
+  logOutIcon: {
+    marginRight: 200,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    fontSize: 12,
+    margin: 10,
+  },
+  title: {
+    marginLeft: 200,
+    fontWeight: 700,
+  },
+};
 export default withRouter(Navbar);
-

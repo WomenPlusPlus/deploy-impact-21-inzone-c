@@ -6,9 +6,9 @@ import NotificationPage from "./NotificationPage";
 import ExamsPage from "./Coordinator/ExamsPage";
 import CoordinatorHomePage from "./Coordinator/CoordinatorHomePage";
 import SettingsPage from "./SettingsPage";
+import StudentsPage from "./Coordinator/StudentsPage";
 
 const CoordinatorRoutes = () => {
-  // We will change those urls after we create the pages for coordinators!
   return (
     <div>
       <BrowserRouter>
@@ -20,6 +20,7 @@ const CoordinatorRoutes = () => {
             path="/coordinator/notifications"
             component={NotificationPage}
           />
+          <Route path="/coordinator/students" component={StudentsPage} />
           <Route path="/coordinator/exams" component={ExamsPage} />
           <Route path="/coordinator/settings" component={SettingsPage} />
         </Switch>

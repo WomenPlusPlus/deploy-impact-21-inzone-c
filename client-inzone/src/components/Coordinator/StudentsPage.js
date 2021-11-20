@@ -27,10 +27,11 @@ import {
   ExpandMore,
   Sort,
   Search,
-  NotificationsActive,
+  BlurLinear,
+  Groups,
 } from "@mui/icons-material";
 
-const NotificationPage = () => {
+const StudentsPage = () => {
   const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState("");
@@ -42,18 +43,12 @@ const NotificationPage = () => {
       setSelectedIndex(index);
     }
   };
-  const handleOpenNotificationModal = () => {
-    setOpenModal(true);
-  };
-  const handleCloseNotificationModal = () => {
-    setOpenModal(false);
-  };
   return (
     <div>
       <CssBaseline />
       <Box
         sx={{
-          height: "100vh",
+          height: "190vh",
         }}
       >
         <CssBaseline />
@@ -61,34 +56,7 @@ const NotificationPage = () => {
           <Item style={styles.bigItemStyle}>
             {loading === true && <LinearProgress />}
             <div style={styles.headerDiv}>
-              <Typography sx={styles.headerTitle}>Notifications</Typography>
-              <Button
-                onClick={handleOpenNotificationModal}
-                sx={styles.headerButton}
-              >
-                Sample Notification
-              </Button>
-              <Modal open={openModal} onClose={handleCloseNotificationModal}>
-                <Box sx={styles.modalBoxStyle}>
-                  <div style={styles.modalBoxIconDiv}>
-                    <NotificationsActive style={styles.modalBoxIcon} />
-                  </div>
-                  <Typography style={styles.modalBoxTitle}>
-                    Important Notification!
-                  </Typography>
-                  <Typography style={styles.modalBoxShortDescription}>
-                    An attempt to exit the exam was detected.
-                  </Typography>
-                  <Typography style={styles.modalBoxLongDescription}>
-                    At nam minimum ponderum. Est audiam animal molestiae te. Ex
-                    duo eripuit mentitum?
-                  </Typography>
-                  <div style={{ textAlign: "center" }}>
-                      <Button style={styles.modalBoxButtonRestart}>Restart Exam</Button>
-                      <Button style={styles.modalBoxButtonCancel}>Cancel</Button>
-                    </div>
-                </Box>
-              </Modal>
+              <Typography sx={styles.headerTitle}>Students</Typography>
             </div>
             <Divider style={{ marginBottom: 30 }} />
             <div>
@@ -101,13 +69,13 @@ const NotificationPage = () => {
                   <ListItemIcon style={{ float: "left" }}>
                     <Sort />
                     <span style={{ marginLeft: 5, float: "right" }}>
-                      Sort by
+                      Filter
                     </span>
                   </ListItemIcon>
                 </MenuItem>
-                <MenuItem value={10}>Type</MenuItem>
-                <MenuItem value={20}>Title</MenuItem>
-                <MenuItem value={30}>Date</MenuItem>
+                <MenuItem value={10}>Date</MenuItem>
+                <MenuItem value={20}>Group</MenuItem>
+                <MenuItem value={30}>Course</MenuItem>
               </Select>
               <Box sx={styles.searchBox}>
                 <Search sx={{ color: "action.active", m: 1 }} />
@@ -117,6 +85,16 @@ const NotificationPage = () => {
                   style={{ marginBottom: 3 }}
                 />
               </Box>
+            </div>
+            <div>
+              <Button style={styles.headerButton}>
+                <Groups />
+                Create Group
+              </Button>
+              <Button style={styles.headerButton}>
+                <BlurLinear />
+                Report Data
+              </Button>
             </div>
             <Grid container item spacing={5}>
               <List sx={styles.listStyle}>
@@ -138,11 +116,11 @@ const NotificationPage = () => {
                       >
                         <ListItemButton role={undefined} dense>
                           <ListItemText
-                            primary={`Notification Title ${
+                            primary={`Group Name #${
                               value + 1
-                            } ----- 11/20/2021 18:4${value + 1} ----- ${
-                              value === 0 ? "Exam" : "Student"
-                            } Notification ${value === 0 ? " ----- NEW" : ""}`}
+                            } ----- Course Name #${
+                              value + 1
+                            } ----- Exam Date 0${value + 1}/20/2021`}
                           />
                           {index === selectedIndex ? (
                             <ExpandLess />
@@ -158,35 +136,43 @@ const NotificationPage = () => {
                       >
                         <div>
                           <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                              <Item style={styles.expandedItemLeftGrid}>
+                                <Paper
+                                  variant="outlined"
+                                  style={styles.expandedImage}
+                                >
+                                  <img
+                                    width="100%"
+                                    src="/some_distrubution.png"
+                                  />
+                                </Paper>
+                              </Item>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Item style={styles.expandedItemRightGrid}>
+                                <Paper
+                                  variant="outlined"
+                                  style={styles.expandedImage}
+                                >
+                                  <img
+                                    width="100%"
+                                    src="/wordcloud.jpg"
+                                  />
+                                </Paper>
+                              </Item>
+                            </Grid>
                             <Grid item xs={8}>
                               <Item style={styles.expandedItemLeftGrid}>
-                                <Typography style={styles.expandedTitle}>
-                                  Notification Title {value + 1}
-                                </Typography>
-                                <Divider style={styles.divider} />
-                                <Typography
-                                  style={styles.expandedDescriptionTimeAndType}
+                                <Paper
+                                  variant="outlined"
+                                  style={styles.expandedImage}
                                 >
-                                  11/20/2021 18:4{value + 1} |{" "}
-                                  {value === 0 ? "Exam" : "Student"}{" "}
-                                  Notification
-                                </Typography>
-                                <Typography
-                                  style={styles.expandedDescriptionFirstLong}
-                                >
-                                  Et has minim elitr intellegat. Mea aeterno
-                                  eleifend antiopam ad, nam no suscipit
-                                  quaerendum. At nam minimum ponderum. Est
-                                  audiam animal molestiae te. Ex duo eripuit
-                                  mentitum?
-                                </Typography>
-                                <Typography
-                                  style={styles.expandedDescriptionSecondLong}
-                                >
-                                  Eleifend antiopam ad, nam no suscipit
-                                  quaerendum. At nam minimum ponderum. Est
-                                  audiam animal molestiae te.
-                                </Typography>
+                                  <img
+                                    width="100%"
+                                    src="/sentimentanalysis.png"
+                                  />
+                                </Paper>
                               </Item>
                             </Grid>
                             <Grid item xs={4}>
@@ -197,7 +183,33 @@ const NotificationPage = () => {
                                 >
                                   <img
                                     width="100%"
-                                    src="/home-logo-sample.png"
+                                    src="/averageexamtime.png"
+                                  />
+                                </Paper>
+                              </Item>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Item style={styles.expandedItemLeftGrid}>
+                                <Paper
+                                  variant="outlined"
+                                  style={styles.expandedImage}
+                                >
+                                  <img
+                                    width="100%"
+                                    src="/malefemale.png"
+                                  />
+                                </Paper>
+                              </Item>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Item style={styles.expandedItemRightGrid}>
+                                <Paper
+                                  variant="outlined"
+                                  style={styles.expandedImage}
+                                >
+                                  <img
+                                    width="100%"
+                                    src="/attendance.png"
                                   />
                                 </Paper>
                               </Item>
@@ -262,10 +274,10 @@ const styles = {
   },
   headerButton: {
     float: "right",
-    fontSize: 10,
-    fontWeight: 'bold',
-    marginTop: 2,
-    height: 25,
+    fontSize: 12,
+    fontWeight: "bold",
+    height: 40,
+    marginRight: 7,
     backgroundColor: "#F8BE48",
     color: "#2B2E39",
   },
@@ -276,9 +288,9 @@ const styles = {
     height: 25,
     backgroundColor: "#2B2E39",
     color: "#E3E4E5",
-    borderColor: '#F8BE48',
+    borderColor: "#F8BE48",
     borderWidth: 1,
-    borderStyle: 'solid'
+    borderStyle: "solid",
   },
   modalBoxButtonCancel: {
     fontSize: 10,
@@ -331,9 +343,10 @@ const styles = {
   searchBox: {
     display: "flex",
     alignItems: "flex-end",
-    float: "right",
+    float: "left",
     width: 150,
     height: 40,
+    marginLeft: 2,
     borderColor: "#F8BE48",
     borderWidth: 1,
     borderRadius: 2,
@@ -371,4 +384,4 @@ const styles = {
     marginTop: 30,
   },
 };
-export default NotificationPage;
+export default StudentsPage;

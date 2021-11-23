@@ -80,13 +80,14 @@ const NotificationPage = () => {
                     An attempt to exit the exam was detected.
                   </Typography>
                   <Typography style={styles.modalBoxLongDescription}>
-                    At nam minimum ponderum. Est audiam animal molestiae te. Ex
-                    duo eripuit mentitum?
+                    Zakia attempted to change the tab. What do you want to do?
                   </Typography>
                   <div style={{ textAlign: "center" }}>
-                      <Button style={styles.modalBoxButtonRestart}>Restart Exam</Button>
-                      <Button style={styles.modalBoxButtonCancel}>Cancel</Button>
-                    </div>
+                    <Button style={styles.modalBoxButtonRestart}>
+                      Restart Exam
+                    </Button>
+                    <Button style={styles.modalBoxButtonCancel}>Finish Exam</Button>
+                  </div>
                 </Box>
               </Modal>
             </div>
@@ -158,50 +159,113 @@ const NotificationPage = () => {
                       >
                         <div>
                           <Grid container spacing={2}>
-                            <Grid item xs={8}>
-                              <Item style={styles.expandedItemLeftGrid}>
-                                <Typography style={styles.expandedTitle}>
-                                  Notification Title {value + 1}
-                                </Typography>
-                                <Divider style={styles.divider} />
-                                <Typography
-                                  style={styles.expandedDescriptionTimeAndType}
-                                >
-                                  11/20/2021 18:4{value + 1} |{" "}
-                                  {value === 0 ? "Exam" : "Student"}{" "}
-                                  Notification
-                                </Typography>
-                                <Typography
-                                  style={styles.expandedDescriptionFirstLong}
-                                >
-                                  Et has minim elitr intellegat. Mea aeterno
-                                  eleifend antiopam ad, nam no suscipit
-                                  quaerendum. At nam minimum ponderum. Est
-                                  audiam animal molestiae te. Ex duo eripuit
-                                  mentitum?
-                                </Typography>
-                                <Typography
-                                  style={styles.expandedDescriptionSecondLong}
-                                >
-                                  Eleifend antiopam ad, nam no suscipit
-                                  quaerendum. At nam minimum ponderum. Est
-                                  audiam animal molestiae te.
-                                </Typography>
-                              </Item>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Item style={styles.expandedItemRightGrid}>
-                                <Paper
-                                  variant="outlined"
-                                  style={styles.expandedImage}
-                                >
-                                  <img
-                                    width="100%"
-                                    src="/home-logo-sample.png"
-                                  />
-                                </Paper>
-                              </Item>
-                            </Grid>
+                            {selectedIndex === 0 ? (
+                              <>
+                                <Grid item xs={12}>
+                                  <Item style={styles.expandedItemRightGrid}>
+                                    <Paper
+                                      variant="outlined"
+                                      style={styles.expandedImage}
+                                    >
+                                      <img
+                                        width="100%"
+                                        src="/cheating_names.JPG"
+                                      />
+                                    </Paper>
+                                  </Item>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Item style={styles.expandedItemLeftGrid}>
+                                    <Typography style={styles.expandedTitle}>
+                                      Notification Title {value + 1}
+                                    </Typography>
+                                    <Divider style={styles.divider} />
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionTimeAndType
+                                      }
+                                    >
+                                      11/20/2021 18:4{value + 1} |{" "}
+                                      {value === 0 ? "Exam" : "Student"}{" "}
+                                      Notification
+                                    </Typography>
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionFirstLong
+                                      }
+                                    >
+                                      Et has minim elitr intellegat. Mea aeterno
+                                      eleifend antiopam ad, nam no suscipit
+                                      quaerendum. At nam minimum ponderum. Est
+                                      audiam animal molestiae te. Ex duo eripuit
+                                      mentitum?
+                                    </Typography>
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionSecondLong
+                                      }
+                                    >
+                                      Eleifend antiopam ad, nam no suscipit
+                                      quaerendum. At nam minimum ponderum. Est
+                                      audiam animal molestiae te.
+                                    </Typography>
+                                  </Item>
+                                </Grid>
+                              </>
+                            ) : (
+                              <>
+                                <Grid item xs={8}>
+                                  <Item style={styles.expandedItemLeftGrid}>
+                                    <Typography style={styles.expandedTitle}>
+                                      Notification Title {value + 1}
+                                    </Typography>
+                                    <Divider style={styles.divider} />
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionTimeAndType
+                                      }
+                                    >
+                                      11/20/2021 18:4{value + 1} |{" "}
+                                      {value === 0 ? "Exam" : "Student"}{" "}
+                                      Notification
+                                    </Typography>
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionFirstLong
+                                      }
+                                    >
+                                      Et has minim elitr intellegat. Mea aeterno
+                                      eleifend antiopam ad, nam no suscipit
+                                      quaerendum. At nam minimum ponderum. Est
+                                      audiam animal molestiae te. Ex duo eripuit
+                                      mentitum?
+                                    </Typography>
+                                    <Typography
+                                      style={
+                                        styles.expandedDescriptionSecondLong
+                                      }
+                                    >
+                                      Eleifend antiopam ad, nam no suscipit
+                                      quaerendum. At nam minimum ponderum. Est
+                                      audiam animal molestiae te.
+                                    </Typography>
+                                  </Item>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Item style={styles.expandedItemRightGrid}>
+                                    <Paper
+                                      variant="outlined"
+                                      style={styles.expandedImage}
+                                    >
+                                      <img
+                                        width="100%"
+                                        src="/home-logo-sample.png"
+                                      />
+                                    </Paper>
+                                  </Item>
+                                </Grid>
+                              </>
+                            )}
                           </Grid>
                         </div>
                       </Collapse>
@@ -263,7 +327,7 @@ const styles = {
   headerButton: {
     float: "right",
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 2,
     height: 25,
     backgroundColor: "#F8BE48",
@@ -276,9 +340,9 @@ const styles = {
     height: 25,
     backgroundColor: "#2B2E39",
     color: "#E3E4E5",
-    borderColor: '#F8BE48',
+    borderColor: "#F8BE48",
     borderWidth: 1,
-    borderStyle: 'solid'
+    borderStyle: "solid",
   },
   modalBoxButtonCancel: {
     fontSize: 10,
@@ -367,8 +431,8 @@ const styles = {
   },
   modalBoxLongDescription: {
     textAlign: "center",
-    fontSize: 10,
-    marginTop: 30,
+    fontSize: 13,
+    marginTop: 15,
   },
 };
 export default NotificationPage;

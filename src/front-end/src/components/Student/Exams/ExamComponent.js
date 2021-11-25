@@ -144,7 +144,7 @@ const ExamComponent = (props) => {
         </Box>
         <Box component="span" m={1} style={styles.bigBox}>
           <Typography sx={styles.examPartLabel}>
-            Capstone Project Feedback
+            Capstone Project
           </Typography>
 
           <Button

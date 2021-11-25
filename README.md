@@ -22,6 +22,11 @@ Clone the project to current directory.
   git clone https://github.com/WomenPlusPlus/deploy-impact-21-inzone-c.git .
 ```
 
+Change directory
+```bash
+  cd src/front-end/src
+```
+
 Install dependencies.
 
 ```bash
@@ -78,10 +83,10 @@ RUN!
 | `objectId` | `string` | **Required**. ObjectId of an exam. |
 
 
+## Authors and contacts of who wants to continue
 
-
-## Authors
-
-- [@giadafallo](https://github.com/GiadaFallo) -> Giada Fallo -> Project Management
-- [@ogimgio](https://github.com/ogimgio) -> Gioele Monopoli -> Frontend Developer
+- [@giadafallo](https://github.com/GiadaFallo) -> Giada Fallo -> Project Management and Front-end Developer
+- Marta Bonilla -> UX/UI Designer
 - [@paradyo](https://github.com/paradyo) -> Emrecan Özkan -> Full Stack Developer
+- [@namgng](https://github.com/namgng) -> Namrata Gurung -> PM Deputy and Data Science
+  

@@ -25,13 +25,13 @@ Clone the project to current directory.
 Install dependencies.
 
 ```bash
-  yarn install
+  npm install
 ```
 
 RUN!
 
 ```bash
-  yarn start
+  npm start
 ```
 
 

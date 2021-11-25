@@ -77,16 +77,18 @@ const NotificationPage = () => {
                     Important Notification!
                   </Typography>
                   <Typography style={styles.modalBoxShortDescription}>
-                    An attempt to exit the exam was detected.
+                    Tab switching attempt detected!
                   </Typography>
                   <Typography style={styles.modalBoxLongDescription}>
-                    Zakia attempted to change the tab. What do you want to do?
+                    Giada attempted to change the tab. What do you want to do?
                   </Typography>
                   <div style={{ textAlign: "center" }}>
                     <Button style={styles.modalBoxButtonRestart}>
                       Restart Exam
                     </Button>
-                    <Button style={styles.modalBoxButtonCancel}>Finish Exam</Button>
+                    <Button style={styles.modalBoxButtonCancel}>
+                      Finish Exam
+                    </Button>
                   </div>
                 </Box>
               </Modal>
@@ -162,19 +164,6 @@ const NotificationPage = () => {
                             {selectedIndex === 0 ? (
                               <>
                                 <Grid item xs={12}>
-                                  <Item style={styles.expandedItemRightGrid}>
-                                    <Paper
-                                      variant="outlined"
-                                      style={styles.expandedImage}
-                                    >
-                                      <img
-                                        width="100%"
-                                        src="/cheating_names.JPG"
-                                      />
-                                    </Paper>
-                                  </Item>
-                                </Grid>
-                                <Grid item xs={12}>
                                   <Item style={styles.expandedItemLeftGrid}>
                                     <Typography style={styles.expandedTitle}>
                                       Notification Title {value + 1}
@@ -209,6 +198,17 @@ const NotificationPage = () => {
                                       quaerendum. At nam minimum ponderum. Est
                                       audiam animal molestiae te.
                                     </Typography>
+                                  </Item>
+                                  <Item style={styles.expandedItemRightGrid}>
+                                    <Paper
+                                      variant="outlined"
+                                      style={styles.expandedImage}
+                                    >
+                                      <img
+                                        width="100%"
+                                        src="/cheating_names.JPG"
+                                      />
+                                    </Paper>
                                   </Item>
                                 </Grid>
                               </>

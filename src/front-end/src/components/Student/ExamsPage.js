@@ -45,12 +45,7 @@ const ExamsPage = () => {
   const loadExam = (exam) => {
     let examObject = {
       examId: exam.objectId,
-      firstSectionStartDate: exam.firstSectionStartDate.iso,
       secondSectionStartDate: exam.secondSectionStartDate.iso,
-      thirdSectionStartDate: exam.thirdSectionStartDate.iso,
-      firstSectionEndDate: exam.firstSectionEndDate.iso,
-      secondSectionEndDate: exam.secondSectionEndDate.iso,
-      thirdSectionEndDate: exam.thirdSectionEndDate.iso,
       firstSectionLink: exam.firstSectionLink,
       mcqTotalTime: exam.mcqTotalTime,
       mcq: {},
@@ -211,7 +206,7 @@ const ExamsPage = () => {
                     <ExamDiv
                       index={index}
                       examName={exam.name}
-                      firstSectionStartDate={exam.firstSectionStartDate.iso}
+                      secondSectionStartDate={exam.secondSectionStartDate.iso}
                       loadExam={(loadTime) => loadTime && loadExam(exam)}
                       handleOpenFeedbackModal={(modalTime) =>
                         modalTime && handleOpenFeedbackModal(exam)

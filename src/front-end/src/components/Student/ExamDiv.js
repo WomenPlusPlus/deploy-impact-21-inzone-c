@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Grid, IconButton } from "@mui/material";
 import { Create, PlaylistAddCheck } from "@mui/icons-material";
 const ExamDiv = (props) => {
-  const { examName, firstSectionStartDate, loadExam, handleOpenFeedbackModal, index } = props;
+  const { examName, secondSectionStartDate, loadExam, handleOpenFeedbackModal, index } = props;
   return (
     <Grid item xs={12} key={index}>
       <Box m={1} style={styles.examBox}>
@@ -17,7 +17,7 @@ const ExamDiv = (props) => {
             variant="subtitle1"
             component="div"
           >
-            You will start at {new Date(firstSectionStartDate).toDateString()}
+            You will start at {new Date(secondSectionStartDate).toDateString()}
           </Typography>
         </div>
         <div

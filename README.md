@@ -112,7 +112,7 @@ RUN!
 ## Authors and contacts of who wants to continue
 
 - [@giadafallo](https://github.com/GiadaFallo) -> Giada Fallo -> Project Management and Front-End Developer
-- Marta Bonilla -> UX/UI Designer
+- [@MartaDeployImpact](https://github.com/MartaDeployImpact) -> Marta Bonilla -> UX/UI Designer
 - [@paradyo](https://github.com/paradyo) -> Emrecan Özkan -> Full Stack Developer
 - [@namgng](https://github.com/namgng) -> Namrata Gurung -> PM Deputy and Data Science
   

@@ -107,7 +107,7 @@ const ExamsPage = () => {
       .catch((err) => console.log(err));
   };
   const renderExamList = (value, index) => {
-    if (value.examState === "pending") {
+    if (value.examState === "Pending") {
       return (
         <>
           <ListItem

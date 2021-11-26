@@ -93,7 +93,7 @@ for i in range(len(df_response)):
 final_df_usertable = pd.concat(trial, ignore_index=True)
 
 
-# In[9]:
+# In[8]:
 
 
 final_df_usertable
@@ -101,7 +101,7 @@ final_df_usertable
 
 # ## Exam Table
 
-# In[10]:
+# In[9]:
 
 
 url = "https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserExam"
@@ -114,31 +114,31 @@ response = requests.request("GET", url, data=payload, headers=headers, params=qu
 #print(response.text)
 
 
-# In[11]:
+# In[10]:
 
 
 output = response.text
 
 
-# In[12]:
+# In[11]:
 
 
 response_dict = json.loads(output)
 
 
-# In[13]:
+# In[12]:
 
 
 df_response = pd.DataFrame(response_dict)
 
 
-# In[14]:
+# In[13]:
 
 
 trial = []
 
 
-# In[15]:
+# In[14]:
 
 
 for i in range(len(df_response)):
@@ -148,25 +148,25 @@ for i in range(len(df_response)):
 final_df_examtable = pd.concat(trial, ignore_index=True)
 
 
-# In[16]:
+# In[15]:
 
 
 final_df_examtable
 
 
-# In[17]:
+# In[16]:
 
 
 final_df_examtable["overall_score"] = final_df_examtable["firstSection"] + final_df_examtable["secondSection"] + final_df_examtable["thirdSection"]
 
 
-# In[18]:
+# In[17]:
 
 
 final_df_examtable["overall_score_percentage"] = (final_df_examtable["overall_score"]/300) * 100
 
 
-# In[20]:
+# In[18]:
 
 
 final_df_examtable
@@ -174,19 +174,19 @@ final_df_examtable
 
 # ## Average time taken to finish the exam
 
-# In[21]:
+# In[19]:
 
 
 final_df_examtable["totalTimeToFinishSecondSection"].mean()
 
 
-# In[22]:
+# In[20]:
 
 
 len(final_df_examtable)
 
 
-# In[23]:
+# In[21]:
 
 
 final_df_examtable["gender"] = 0
@@ -194,7 +194,7 @@ final_df_examtable["age"] = 0
 final_df_examtable["username"] = 0
 
 
-# In[24]:
+# In[22]:
 
 
 for i in range(len(final_df_examtable)):
@@ -205,7 +205,7 @@ for i in range(len(final_df_examtable)):
             final_df_examtable["username"][i] = final_df_usertable["username"][j]
 
 
-# In[25]:
+# In[23]:
 
 
 final_df_examtable
@@ -213,7 +213,7 @@ final_df_examtable
 
 # # Analysis of the Exam Scores
 
-# In[34]:
+# In[24]:
 
 
 fig, ax = plt.subplots()
@@ -223,7 +223,7 @@ plt.show()
 #fig.savefig("overallscorepercentage.png")
 
 
-# In[27]:
+# In[25]:
 
 
 fig, ax = plt.subplots()
@@ -232,7 +232,7 @@ ax.set_xlim(0,100)
 plt.show()
 
 
-# In[28]:
+# In[26]:
 
 
 fig, ax = plt.subplots()
@@ -241,7 +241,7 @@ ax.set_xlim(0,100)
 plt.show()
 
 
-# In[35]:
+# In[27]:
 
 
 fig, ax = plt.subplots()
@@ -250,7 +250,7 @@ ax.set_xlim(0,100)
 plt.show()
 
 
-# In[36]:
+# In[28]:
 
 
 fig, ax = plt.subplots()
@@ -260,7 +260,7 @@ plt.show()
 #fig.savefig("gender_marks.png")
 
 
-# In[37]:
+# In[29]:
 
 
 fig, ax = plt.subplots()
@@ -272,7 +272,7 @@ fig.savefig("age_marks.png")
 
 # # Multiple Choice Questions Table
 
-# In[38]:
+# In[56]:
 
 
 url = "https://inzone-c-parse.tools.deployimpact.ch/parse/classes/MultipleChoiceQuestion"
@@ -285,31 +285,31 @@ response = requests.request("GET", url, data=payload, headers=headers, params=qu
 #print(response.text)
 
 
-# In[39]:
+# In[57]:
 
 
 output = response.text
 
 
-# In[40]:
+# In[58]:
 
 
 response_dict = json.loads(output)
 
 
-# In[41]:
+# In[59]:
 
 
 df_response = pd.DataFrame(response_dict)
 
 
-# In[42]:
+# In[60]:
 
 
 trial = []
 
 
-# In[43]:
+# In[61]:
 
 
 for i in range(len(df_response)):
@@ -319,15 +319,23 @@ for i in range(len(df_response)):
 final_df_MCQtable = pd.concat(trial, ignore_index=True)
 
 
-# In[44]:
+# In[64]:
 
 
 final_df_MCQtable
 
 
+# In[63]:
+
+
+#remove NaN columns and unidentifiable rows (temporary fix as last columns and rows were added last minute)
+final_df_MCQtable = final_df_MCQtable.iloc[:, :-10]
+final_df_MCQtable = final_df_MCQtable.head(-3)
+
+
 # # MCQ answers of all users
 
-# In[45]:
+# In[65]:
 
 
 url = "https://inzone-c-parse.tools.deployimpact.ch/parse/classes/UserMCQAnswer"
@@ -340,31 +348,31 @@ response = requests.request("GET", url, data=payload, headers=headers, params=qu
 #print(response.text)
 
 
-# In[46]:
+# In[66]:
 
 
 output = response.text
 
 
-# In[47]:
+# In[67]:
 
 
 response_dict = json.loads(output)
 
 
-# In[48]:
+# In[68]:
 
 
 df_response = pd.DataFrame(response_dict)
 
 
-# In[49]:
+# In[69]:
 
 
 trial = []
 
 
-# In[50]:
+# In[70]:
 
 
 for i in range(len(df_response)):
@@ -374,44 +382,44 @@ for i in range(len(df_response)):
 final_df_MCQAns = pd.concat(trial, ignore_index=True)
 
 
-# In[51]:
+# In[71]:
 
 
 final_df_MCQAns
 
 
-# In[52]:
+# In[72]:
 
 
 questions = final_df_MCQAns['questionId'].unique()
 
 
-# In[53]:
+# In[73]:
 
 
 questions
 
 
-# In[54]:
+# In[74]:
 
 
 users = final_df_MCQAns['userId'].unique()
 
 
-# In[55]:
+# In[75]:
 
 
 users
 
 
-# In[56]:
+# In[76]:
 
 
 w, h = len(questions), len(users)
 Matrix = [[0 for x in range(w)] for y in range(h)] 
 
 
-# In[57]:
+# In[77]:
 
 
 for i in range(h):
@@ -421,64 +429,64 @@ for i in range(h):
             Matrix[i][j] = row["answer"]
 
 
-# In[58]:
+# In[78]:
 
 
 final_df_userans = pd.DataFrame(Matrix)
 
 
-# In[59]:
+# In[79]:
 
 
 final_df_userans
 
 
-# In[60]:
+# In[80]:
 
 
 for i in range(final_df_userans.shape[1]):
     final_df_userans = final_df_userans.rename(columns={i: questions[i]})
 
 
-# In[61]:
+# In[81]:
 
 
 for j in range(final_df_userans.shape[0]):
     final_df_userans = final_df_userans.rename(index={j: users[j]})
 
 
-# In[62]:
+# In[82]:
 
 
 final_df_userans = final_df_userans.astype(int)
 
 
-# In[63]:
+# In[83]:
 
 
 final_df_userans
 
 
-# In[64]:
+# In[84]:
 
 
 duplicate_answers = final_df_userans[final_df_userans.duplicated(keep=False)]
 
 
-# In[65]:
+# In[85]:
 
 
 duplicate_answers
 
 
-# In[66]:
+# In[86]:
 
 
 duplicate_answers["timetaken"]=0
 duplicate_answers["username"]=""
 
 
-# In[74]:
+# In[87]:
 
 
 for i in range(len(duplicate_answers)):
@@ -491,128 +499,67 @@ for i in range(len(duplicate_answers)):
 
 # ## Cheating Notification
 
-# In[75]:
+# In[88]:
 
 
 duplicate_answers
 
 
-# In[76]:
+# In[89]:
 
 
 new_row = final_df_MCQtable["trueAnswer"]
 
 
-# In[77]:
+# In[90]:
 
 
 new_row.index = final_df_MCQtable["objectId"]
 
 
-# In[78]:
+# In[91]:
 
 
 final_df_userans = final_df_userans.append(new_row)
 
 
-# In[79]:
-
-
-final_df_userans
-
-
-# In[80]:
-
-
-ck = final_df_userans[final_df_userans.index == "trueAnswer"]
-
-
-# In[81]:
-
-
-ck
-
-
-# In[83]:
-
-
-max_score_per_question = 100/len(questions)
-
-
-# In[84]:
-
-
-max_score_per_question
-
-
-# In[89]:
-
-
-ta = final_df_userans[final_df_userans.index == "trueAnswer"]
-
-
-# In[90]:
-
-
-ct.index[1] == ta["XxfMEUBz2K"]
-
-
-# In[91]:
-
-
-ta[ta.columns[0]]
-
-
 # In[92]:
 
 
-ct.index[0]
+final_df_userans
 
 
 # In[93]:
 
 
-ta.columns
+max_score_per_question = 100/len(questions)
 
 
 # In[94]:
 
 
-final_df_userans.columns[0]
+max_score_per_question
 
 
 # In[95]:
 
 
-w = len(questions)
-counts_incorrect = [0 for x in range(w)]
+final_df_userans
 
 
 # In[96]:
 
 
-len(ta.columns)
+Matrix = [[0 for x in range(final_df_userans.shape[1])] for y in range(final_df_userans.shape[0]-1)] 
 
 
 # In[97]:
 
 
-final_df_userans
-
-
-# In[98]:
-
-
-Matrix = [[0 for x in range(final_df_userans.shape[1])] for y in range(final_df_userans.shape[0]-1)] 
-
-
-# In[99]:
-
-
 Matrix
 
 
-# In[105]:
+# In[98]:
 
 
 ta = final_df_userans[final_df_userans.index == "trueAnswer"]
@@ -622,39 +569,39 @@ for i in range(final_df_userans.shape[0]-1):
         Matrix[i][j] = (final_df_userans[final_df_userans.columns[j]][i]==ta[ta.columns[j]][0])
 
 
-# In[106]:
+# In[99]:
 
 
 Matrix
 
 
-# In[107]:
+# In[100]:
 
 
 final_df_ta = pd.DataFrame(Matrix)
 
 
-# In[108]:
+# In[101]:
 
 
 final_df_ta
 
 
-# In[109]:
+# In[102]:
 
 
 for i in range(final_df_ta.shape[1]):
     final_df_ta = final_df_ta.rename(columns={i: questions[i]})
 
 
-# In[110]:
+# In[103]:
 
 
 for j in range(final_df_ta.shape[0]):
     final_df_ta = final_df_ta.rename(index={j: users[j]})
 
 
-# In[111]:
+# In[104]:
 
 
 final_df_ta = final_df_ta.astype(int)
@@ -662,31 +609,31 @@ final_df_ta = final_df_ta.astype(int)
 
 # ## Truth Table
 
-# In[112]:
+# In[105]:
 
 
 final_df_ta
 
 
-# In[113]:
+# In[106]:
 
 
 sum_ques = final_df_ta.sum(axis=0)
 
 
-# In[114]:
+# In[107]:
 
 
 sum_ques
 
 
-# In[ ]:
+# In[108]:
 
 
 ## Hardest Questions
 
 
-# In[115]:
+# In[109]:
 
 
 hard_ques_score = sum_ques.min()
@@ -699,19 +646,19 @@ for i in range(len(sum_ques)):
                 print(final_df_MCQtable["question"][j])
 
 
-# In[315]:
+# In[110]:
 
 
 sum_ans = final_df_ta.sum(axis=1)
 
 
-# In[319]:
+# In[111]:
 
 
 sum_ans = sum_ans*max_score_per_question
 
 
-# In[340]:
+# In[112]:
 
 
 sum_ans.index
@@ -719,7 +666,7 @@ sum_ans.index
 
 # ## Highest Scores
 
-# In[126]:
+# In[113]:
 
 
 max_score = sum_ans.max()
@@ -734,7 +681,7 @@ for i in range(len(sum_ans)):
 
 # ## Minimum Scores
 
-# In[353]:
+# In[114]:
 
 
 min_score = sum_ans.min()
@@ -749,105 +696,115 @@ for i in range(len(sum_ans)):
 
 # # Sentiment Analysis on Feedback Text and Wordcloud
 
-# In[116]:
+# In[115]:
 
 
 import spacy
 
 
-# In[117]:
+# In[116]:
 
 
 #pip install spacytextblob
 
 
-# In[118]:
+# In[117]:
 
 
 from spacytextblob.spacytextblob import SpacyTextBlob
 
 
-# In[119]:
+# In[118]:
 
 
 nlp = spacy.load("en_core_web_sm")
 
 
-# In[120]:
+# In[119]:
 
 
 final_df_examtable
 
 
-# In[121]:
+# In[148]:
 
 
 text_overall = ""
+text_overall_capstoneproject = ""
 
 
-# In[122]:
+# In[150]:
 
 
 for i in range(len(final_df_examtable)):
     text_overall+= final_df_examtable['optionalFeedback'][i]
+    text_overall_capstoneproject+= final_df_examtable['capstoneProjectTextFeedback'][i]
 
 
-# In[ ]:
+# In[151]:
 
 
 text_overall
 
 
-# In[ ]:
+# In[152]:
 
 
-text = final_df['optionalFeedback'][5]
+text_overall_capstoneproject
 
 
-# In[ ]:
-
-
-text
-
-
-# In[123]:
+# In[154]:
 
 
 #nlp.add_pipe("spacytextblob")
-doc = nlp(text)
-
-
-# In[167]:
-
-
+doc = nlp(text_overall)
 print('Polarity:', doc._.polarity)
 print('Sujectivity:', doc._.subjectivity)
 print('Assessments:', doc._.assessments)
 
 
-# In[143]:
+# In[155]:
+
+
+#nlp.add_pipe("spacytextblob")
+doc = nlp(text_overall_capstoneproject)
+print('Polarity:', doc._.polarity)
+print('Sujectivity:', doc._.subjectivity)
+print('Assessments:', doc._.assessments)
+
+
+# In[141]:
 
 
 from textblob import TextBlob
-blob = TextBlob(text)
+blob = TextBlob(text_overall)
 print(blob.sentiment_assessments.polarity)
 print(blob.sentiment_assessments.subjectivity)
 print(blob.sentiment_assessments.assessments)
 
 
-# In[113]:
+# In[156]:
+
+
+blob = TextBlob(text_overall_capstoneproject)
+print(blob.sentiment_assessments.polarity)
+print(blob.sentiment_assessments.subjectivity)
+print(blob.sentiment_assessments.assessments)
+
+
+# In[132]:
 
 
 #pip install wordcloud
 
 
-# In[406]:
+# In[133]:
 
 
 from wordcloud import WordCloud, STOPWORDS
 
 
-# In[411]:
+# In[144]:
 
 
 wc = WordCloud(background_color = 'white', width = 1920, height = 1080)
@@ -856,15 +813,24 @@ plt.imshow(wc)
 plt.axis("off")
 
 
+# In[157]:
+
+
+wc = WordCloud(background_color = 'white', width = 1920, height = 1080)
+wc.generate_from_text(text_overall_capstoneproject)
+plt.imshow(wc)
+plt.axis("off")
+
+
 # # Visualize Attendance  
 
-# In[416]:
+# In[146]:
 
 
 attendance = int(input("Enter attendance percentage:"))
 
 
-# In[417]:
+# In[147]:
 
 
 # Pie chart
@@ -887,12 +853,6 @@ plt.text(0.28, 0.45, str(attendance)+'%', fontsize=50, horizontalalignment='cent
 #ax1.axis('equal')  
 plt.tight_layout()
 plt.show()
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
